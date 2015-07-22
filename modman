@@ -8,3 +8,4 @@ app/design/frontend/base/default/layout/*                             app/design
 app/design/frontend/base/default/template/flatz_amazon_login          app/design/frontend/base/default/template/flatz_amazon_login
 app/design/frontend/base/default/template/flatz_amazon_payments       app/design/frontend/base/default/template/flatz_amazon_payments
 skin/frontend/base/default/flatz_amazon_payments                      skin/frontend/base/default/flatz_amazon_payments
+skin/adminhtml/default/default/flatz_amazon_payments                  skin/adminhtml/default/default/flatz_amazon_payments
