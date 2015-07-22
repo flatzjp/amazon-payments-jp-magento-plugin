@@ -1,3 +1,10 @@
+## はじめに
+
+Magento用のAmazon ログイン&ペイメントモジュールを日本のAmazon ログイン＆ペイメントにローカライズしたモジュールです。
+本モジュールを利用することで、Magentoで日本のAmazonログイン＆ペイメントを利用することが可能になります。
+
+日本のAmazonログイン＆ペイメントの詳細については https://payments.amazon.co.jp/ を参照してください。
+
 ## Quick Start - Login and Pay with Amazon for Magento
 
 [View the Complete User Guide](https://github.com/amzn/amazon-payments-magento-plugin/wiki)
@@ -104,7 +111,7 @@ Issues Resolved
 * Fix customer address update for virtual (no shipping address) orders cea65e4
 * Fix order status e5a8015
 
-v1.1.1 
+v1.1.1
 * Fix product shortcut button - JS SyntaxError: missing ) after argumen… … 0157078
 * Fix #60 remove port numbers from URL in help text 7cdde2c
 * Fix #57 hide amazon payments method if no amazon session a8e2fde
