@@ -3,8 +3,9 @@ app/etc/modules/*                                                     app/etc/mo
 app/locale/ja_JP/*                                                    app/locale/ja_JP/
 app/code/community/FLATz/*                                            app/code/community/FLATz/
 app/design/adminhtml/default/default/layout/*                         app/design/adminhtml/default/default/layout/
-app/design/adminhtml/default/default/template/flatz_amazon_payments   app/design/adminhtml/default/default/template/flatz_amazon_payments
+app/design/adminhtml/default/default/template/flatz_amazon_payments/* app/design/adminhtml/default/default/template/flatz_amazon_payments
 app/design/frontend/base/default/layout/*                             app/design/frontend/base/default/layout/
-app/design/frontend/base/default/template/flatz_amazon_login          app/design/frontend/base/default/template/flatz_amazon_login
-app/design/frontend/base/default/template/flatz_amazon_payments       app/design/frontend/base/default/template/flatz_amazon_payments
-skin/frontend/base/default/flatz_amazon_payments                      skin/frontend/base/default/flatz_amazon_payments
+app/design/frontend/base/default/template/flatz_amazon_login/*        app/design/frontend/base/default/template/flatz_amazon_login
+app/design/frontend/base/default/template/flatz_amazon_payments/*     app/design/frontend/base/default/template/flatz_amazon_payments
+skin/frontend/base/default/flatz_amazon_payments/*                    skin/frontend/base/default/flatz_amazon_payments
+skin/adminhtml/default/default/flatz_amazon_payments/*                skin/adminhtml/default/default/flatz_amazon_payments
