@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_Type_Checkout extends Mage_Checkout_Model_Type_Onepage
+class FLATz_AmazonPayments_Model_Type_Checkout extends Mage_Checkout_Model_Type_Onepage
 {
 
     /**
@@ -57,10 +57,26 @@ class Amazon_Payments_Model_Type_Checkout extends Mage_Checkout_Model_Type_Onepa
         }
 
         $address = $this->getQuote()->getShippingAddress();
+        $address->addData($data);
+        /* @var $addressForm Mage_Customer_Model_Form */
+        /*
+        $addressForm    = Mage::getModel('customer/form');
+        $addressForm->setFormCode('customer_address_edit')
+            ->setEntityType('customer_address')
+            ->setIsAjaxRequest(Mage::app()->getRequest()->isAjax());
 
-        foreach ($data as $attribute => $value) {
-          $address->setData($attribute, $value);
+        $addressForm->setEntity($address);
+        // emulate request object
+        $addressData    = $addressForm->extractData($addressForm->prepareRequest($data));
+
+        $addressForm->compactData($addressData);
+        // unset shipping address attributes which were not shown in form
+        foreach ($addressForm->getAttributes() as $attribute) {
+            if (!isset($data[$attribute->getAttributeCode()])) {
+                $address->setData($attribute->getAttributeCode(), NULL);
+            }
         }
+        */
 
         $address->setCustomerAddressId(null);
         // Additional form data, not fetched by extractData (as it fetches only attributes)

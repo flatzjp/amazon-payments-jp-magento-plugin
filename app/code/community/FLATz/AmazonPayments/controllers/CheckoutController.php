@@ -3,15 +3,15 @@
  * Amazon Payments Checkout Controller
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Checkout
+class FLATz_AmazonPayments_CheckoutController extends FLATz_AmazonPayments_Controller_Checkout
 {
     protected $_amazonOrderReferenceId;
-    protected $_checkoutUrl = 'checkout/amazon_payments';
+    protected $_checkoutUrl = 'checkout/flatz_amazon_payments';
 
     /**
      * Checkout page
@@ -228,7 +228,7 @@ class Amazon_Payments_CheckoutController extends Amazon_Payments_Controller_Chec
             }
 
             $this->_getCheckout()->savePayment(array(
-                'method' => 'amazon_payments',
+                'method' => 'flatz_amazon_payments',
                 'additional_information' => $additional_information,
             ));
 

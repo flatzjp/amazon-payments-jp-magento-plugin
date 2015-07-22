@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_Observer_Onepage
+class FLATz_AmazonPayments_Model_Observer_Onepage
 {
     protected $_quote;
 
@@ -19,7 +19,7 @@ class Amazon_Payments_Model_Observer_Onepage
      */
     public function beforeLoadLayout(Varien_Event_Observer $observer)
     {
-        $_helper = Mage::helper('amazon_payments/data');
+        $_helper = Mage::helper('flatz_amazon_payments/data');
         $fullActionName = $observer->getEvent()->getAction()->getFullActionName();
 
 
@@ -30,7 +30,7 @@ class Amazon_Payments_Model_Observer_Onepage
             }
 
             // Use custom checkout layout
-            $observer->getEvent()->getLayout()->getUpdate()->addHandle('checkout_onepage_index_amazon_payments');
+            $observer->getEvent()->getLayout()->getUpdate()->addHandle('checkout_onepage_index_flatz_amazon_payments');
         }
     }
 
@@ -42,7 +42,7 @@ class Amazon_Payments_Model_Observer_Onepage
      */
     public function clearShippingAddress(Varien_Event_Observer $observer)
     {
-        $_helper = Mage::helper('amazon_payments/data');
+        $_helper = Mage::helper('flatz_amazon_payments/data');
         $session = $observer->getEvent()->getCheckoutSession();
 
         $action = Mage::app()->getFrontController()->getAction()->getFullActionName();

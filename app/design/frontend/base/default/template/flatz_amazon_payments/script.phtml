@@ -3,19 +3,20 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 ?>
 
 <?php
-    $_helper = Mage::helper('amazon_payments/data');
+    $_helper = Mage::helper('flatz_amazon_payments/data');
 
-    $sandbox = ($_helper->isAmazonSandbox()) ? 'sandbox/' : '';
-    $jsAmazon = 'https://static-na.payments-amazon.com/OffAmazonPayments/us/' . $sandbox . 'js/Widgets.js?sellerId=' . $_helper->getSellerId();
+    $base = ($_helper->isAmazonSandbox()) ? 
+            'https://origin-na.ssl-images-amazon.com/images/G/09/EP/offAmazonPayments/sandbox/prod/lpa/js/Widgets.js' : 'https://static-fe.payments-amazon.com/OffAmazonPayments/jp/lpa/js/Widgets.js';
+    $jsAmazon = $base . '?sellerId=' . $_helper->getSellerId();
 
-    $isPopup = Mage::helper('amazon_login/data')->isPopup();
+    $isPopup = Mage::helper('flatz_amazon_login/data')->isPopup();
 ?>
 
 <script type='text/javascript'>

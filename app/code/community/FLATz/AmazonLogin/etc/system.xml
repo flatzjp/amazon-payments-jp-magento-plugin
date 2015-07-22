@@ -4,14 +4,15 @@
  * Login with Amazon
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
+ * @copyright   Copyright (c) 2015 FLATz Inc.
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
   <sections>
-    <amazon_login translate="label">
+    <flatz_amazon_login translate="label">
       <label>Login with Amazon</label>
       <tab>customer</tab>
       <frontend_type>text</frontend_type>
@@ -35,7 +36,7 @@
                     <br/>
                     <strong>Setup</strong>
                     <ol style="list-style:inside decimal;">
-                      <li>Access your client credentials by registering a new application through <a href="https://sellercentral.amazon.com/" target="_blank">Amazon Seller Central</a>.
+                      <li>Access your client credentials by registering a new application through <a href="https://sellercentral.amazon.co.jp/" target="_blank">Amazon Seller Central Japan</a>.
                       <li>Whitelist your domain under "Allowed JavaScript Origins."
                       <li>Under General->Web, enable "Use Secure URLs in Frontend." (HTTPS is required.)
                       <li>Amazon Payments (Login and Pay) is configured under Sales->Payment Methods.
@@ -51,7 +52,7 @@
               <label>Enabled</label>
               <frontend_type>select</frontend_type>
               <source_model>adminhtml/system_config_source_yesno</source_model>
-              <backend_model>amazon_login/system_config_backend_enabled</backend_model>
+              <backend_model>flatz_amazon_login/system_config_backend_enabled</backend_model>
               <sort_order>10</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
@@ -78,7 +79,7 @@
 
             <popup translate="label">
               <label>Pop-up</label>
-              <comment><model>amazon_login/system_config_backend_popupcomment</model></comment>
+              <comment><model>flatz_amazon_login/system_config_backend_popupcomment</model></comment>
               <frontend_type>select</frontend_type>
               <source_model>adminhtml/system_config_source_yesno</source_model>
               <sort_order>40</sort_order>
@@ -99,7 +100,7 @@
             <button_type translate="label">
                 <label>Button Label</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_login/system_config_source_buttontype</source_model>
+                <source_model>flatz_amazon_login/system_config_source_buttontype</source_model>
                 <sort_order>71</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -109,7 +110,7 @@
             <button_color translate="label">
                 <label>Button Color</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_login/system_config_source_buttoncolor</source_model>
+                <source_model>flatz_amazon_login/system_config_source_buttoncolor</source_model>
                 <sort_order>72</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -119,7 +120,7 @@
             <button_size translate="label">
                 <label>Button Size</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_login/system_config_source_buttonsize</source_model>
+                <source_model>flatz_amazon_login/system_config_source_buttonsize</source_model>
                 <sort_order>73</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -150,6 +151,6 @@
         </settings>
       </groups>
 
-    </amazon_login>
+    </flatz_amazon_login>
   </sections>
 </config>

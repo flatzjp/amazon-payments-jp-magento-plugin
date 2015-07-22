@@ -33,26 +33,32 @@ class OffAmazonPaymentsService_RegionSpecificProperties
 {
 	private $_widgetUrls = array(
 		'eu' => 'https://static-eu.payments-amazon.com',
+		'jp' => 'https://static-fe.payments-amazon.com',
 		'na' => 'https://static-na.payments-amazon.com'
 	);
 
-	private $_serviceUrls = array(
+        // TODO: naをcomにしても大丈夫内容に修正する。
+        
+        private $_serviceUrls = array(
 		'eu' => 'https://mws-eu.amazonservices.com',
-		'na' => 'https://mws.amazonservices.com'
+                'jp' => 'https://mws.amazonservices.jp',
+		'na' => 'https://mws.amazonservices.jp'
 	);
 
 	private $_currencyCodes = array(
 		'de' => 'EUR',
 		'uk' => 'GBP',
 		'us' => 'USD',
-		'na' => 'USD'
+                'jp' => 'JPY',
+		'na' => 'USD',
 	);
 
 	private $_regionMappings = array(
 		'de' => 'eu',
 		'na' => 'na',
 		'uk' => 'eu',
-		'us' => 'na'
+		'us' => 'na',
+                'jp' => 'na'
 	);
 
 	const WIDGET_FORMAT_STRING = '%s/OffAmazonPayments/%s%s/js/Widgets.js?sellerId=%s';

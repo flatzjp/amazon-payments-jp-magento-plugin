@@ -4,7 +4,7 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -17,36 +17,37 @@
     <checkout_cart_index>
 
         <reference name="head">
-            <action method="addJs" ifconfig="payment/amazon_payments/enabled"><script>prototype/window.js</script></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
-            <action method="addItem" ifconfig="payment/amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
-            <action method="addItem"><type>skin_css</type><name>amazon_payments/css/popup_alphacube.css</name><params/></action>
+            <action method="addJs" ifconfig="payment/flatz_amazon_payments/enabled"><script>prototype/window.js</script></action>
+            <action method="addItem" ifconfig="payment/flatz_amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem" ifconfig="payment/flatz_amazon_payments/enabled"><type>js_css</type><name>prototype/windows/themes/alphacube.css</name></action>
+            <action method="addItem"><type>skin_css</type><name>flatz_amazon_payments/css/popup_alphacube.css</name><params/></action>
         </reference>
 
         <reference name="checkout.cart">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
+            <block type="flatz_amazon_payments/button" name="AmazonPayButtonTop" template="flatz_amazon_payments/button.phtml"/>
+            <block type="flatz_amazon_payments/button" name="AmazonPayButtonMethod" template="flatz_amazon_payments/button.phtml"/>
 
             <!-- ifconfig only works with action -->
             <reference name="after_body_start">
-                <action method="append" ifconfig="payment/amazon_payments/enabled">
-                    <block>amazon_payments.script</block>
+                <action method="append" ifconfig="payment/flatz_amazon_payments/enabled">
+                    <block>flatz_amazon_payments.script</block>
+                </action>
+            </reference>
+
+            <reference name="checkout.cart.top_methods">
+                <action method="append" ifconfig="payment/flatz_amazon_payments/enabled">
+                    <block>AmazonPayButtonTop</block>
+                </action>
+            </reference>
+
+            <reference name="checkout.cart.methods">
+                <action method="append" ifconfig="payment/flatz_amazon_payments/enabled">
+                    <block>AmazonPayButtonMethod</block>
                 </action>
             </reference>
 
         </reference>
-
-	<!-- To Move Amazon Payments button around on the cart page, change the after="" attribute to before="" in the below block tags -->
-
-	<reference name="checkout.cart.top_methods">
-		<!-- replace 'after="-"' with 'before="checkout.cart.methods.onepage.top"' to move the Amazon Payments button in front of the Checkout button -->
-		<block type="amazon_payments/button" after="-" name="AmazonPayButtonTop" template="amazon_payments/button.phtml"/>
-	</reference>
-
-	<reference name="checkout.cart.methods">
-		<!-- replace 'after="-"' with 'before="checkout.cart.methods.onepage.bottom"' to move the Amazon Payments button in front of the Checkout button -->
-		<block type="amazon_payments/button" after="-" name="AmazonPayButtonMethod" template="amazon_payments/button.phtml"/>
-	</reference>
-
     </checkout_cart_index>
 
 
@@ -56,17 +57,17 @@
     <checkout_onepage_index>
 
         <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
         </reference>
 
         <reference name="checkout.onepage">
-            <block type="amazon_payments/button" name="amazonpaymentsbutton" template="amazon_payments/onepage/button.phtml"/>
+            <block type="flatz_amazon_payments/button" name="amazonpaymentsbutton" template="flatz_amazon_payments/onepage/button.phtml"/>
         </reference>
 
         <reference name="checkout.onepage.login">
-            <action method="setTemplate" ifconfig="payment/amazon_payments/enabled">
-                <template helper="amazon_payments/data/switchOnepageLoginTemplateIf">
-                    <template_amazon>amazon_payments/onepage/login.phtml</template_amazon>
+            <action method="setTemplate" ifconfig="payment/flatz_amazon_payments/enabled">
+                <template helper="flatz_amazon_payments/data/switchOnepageLoginTemplateIf">
+                    <template_amazon>flatz_amazon_payments/onepage/login.phtml</template_amazon>
                     <template_default>checkout/onepage/login.phtml</template_default>
                  </template>
             </action>
@@ -75,11 +76,11 @@
             <block type="core/text_list" name="col2_before" />
 
             <reference name="col1_before">
-                <block type="amazon_payments/button" name="AmazonPayButtonBefore" template="amazon_payments/onepage/button.phtml"/>
+                <block type="flatz_amazon_payments/button" name="AmazonPayButtonBefore" template="flatz_amazon_payments/onepage/button.phtml"/>
             </reference>
 
             <reference name="col2_before">
-                <block type="amazon_payments/button" name="AmazonPayButtonAdditional" template="amazon_payments/onepage/button.phtml"/>
+                <block type="flatz_amazon_payments/button" name="AmazonPayButtonAdditional" template="flatz_amazon_payments/onepage/button.phtml"/>
             </reference>
         </reference>
 
@@ -88,30 +89,30 @@
 
     <!--
     Onepage layout when user clicks "Pay with Amazon"
-    Added dynamically by Amazon_Payments_Model_Observer_Onepage
+    Added dynamically by FLATz_AmazonPayments_Model_Observer_Onepage
     -->
-    <checkout_onepage_index_amazon_payments>
+    <checkout_onepage_index_flatz_amazon_payments>
 
         <remove name="checkout.onepage.billing" />
         <remove name="checkout.onepage.shipping" />
         <remove name="checkout.onepage.payment" />
 
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>amazon_payments/css/styles_onepage.css</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>flatz_amazon_payments/css/styles_onepage.css</name><params/></action>
         </reference>
 
         <reference name="checkout.progress.wrapper">
-            <block type="amazon_payments/onepage_progress" name="checkout.progress" before="-" template="checkout/onepage/progress.phtml">
-                <block type="amazon_payments/onepage_progress" name="shipping.progress" template="amazon_payments/onepage/progress/widget.phtml" />
-                <block type="amazon_payments/onepage_progress" name="shippingmethod.progress" template="checkout/onepage/progress/shipping_method.phtml" />
+            <block type="flatz_amazon_payments/onepage_progress" name="checkout.progress" before="-" template="checkout/onepage/progress.phtml">
+                <block type="flatz_amazon_payments/onepage_progress" name="shipping.progress" template="flatz_amazon_payments/onepage/progress/widget.phtml" />
+                <block type="flatz_amazon_payments/onepage_progress" name="shippingmethod.progress" template="checkout/onepage/progress/shipping_method.phtml" />
             </block>
         </reference>
 
-        <block type="amazon_payments/onepage" name="checkout.onepage" template="checkout/onepage.phtml">
+        <block type="flatz_amazon_payments/onepage" name="checkout.onepage" template="checkout/onepage.phtml">
 
-            <block type="checkout/onepage_login" name="checkout.onepage.login" as="login" template="amazon_payments/onepage/login_cancel.phtml" />
+            <block type="checkout/onepage_login" name="checkout.onepage.login" as="login" template="flatz_amazon_payments/onepage/login_cancel.phtml" />
 
-            <block type="amazon_payments/onepage_widget" name="amazon_payments.onepage.widget" as="widget" template="amazon_payments/onepage/widget.phtml" />
+            <block type="flatz_amazon_payments/onepage_widget" name="flatz_amazon_payments.onepage.widget" as="widget" template="flatz_amazon_payments/onepage/widget.phtml" />
 
             <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="checkout/onepage/shipping_method.phtml">
                 <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
@@ -126,7 +127,7 @@
 
         </block>
 
-    </checkout_onepage_index_amazon_payments>
+    </checkout_onepage_index_flatz_amazon_payments>
 
     <!--
     One page checkout progress block
@@ -137,7 +138,7 @@
         <remove name="right"/>
         <remove name="left"/>
 
-        <block type="amazon_payments/onepage_progress" name="root" output="toHtml" template="checkout/onepage/progress.phtml">
+        <block type="flatz_amazon_payments/onepage_progress" name="root" output="toHtml" template="checkout/onepage/progress.phtml">
             <block type="checkout/onepage_payment_info" name="payment_info">
                 <action method="setInfoTemplate"><method></method><template></template></action>
             </block>
@@ -153,7 +154,7 @@
         <remove name="right"/>
         <remove name="left"/>
 
-        <block type="amazon_payments/onepage_progress" name="root" output="toHtml" template="amazon_payments/onepage/progress/widget.phtml">
+        <block type="flatz_amazon_payments/onepage_progress" name="root" output="toHtml" template="flatz_amazon_payments/onepage/progress/widget.phtml">
             <action method="setInfoTemplate"><method></method><template></template></action>
         </block>
     </checkout_onepage_progress_widget>
@@ -161,13 +162,13 @@
     <!--
     Amazon standalone page checkout
     -->
-    <checkout_amazon_payments_index translate="label">
+    <checkout_flatz_amazon_payments_index translate="label">
         <label>Pay with Amazon</label>
         <remove name="right"/>
         <remove name="left"/>
 
         <reference name="head">
-            <action method="addItem"><type>skin_css</type><name>amazon_payments/css/styles_checkout.css</name><params/></action>
+            <action method="addItem"><type>skin_css</type><name>flatz_amazon_payments/css/styles_checkout.css</name><params/></action>
         </reference>
 
         <reference name="root">
@@ -175,9 +176,9 @@
         </reference>
         <reference name="content">
 
-            <block type="amazon_payments/checkout" name="amazon_payments.checkout" template="amazon_payments/checkout.phtml">
+            <block type="flatz_amazon_payments/checkout" name="flatz_amazon_payments.checkout" template="flatz_amazon_payments/checkout.phtml">
 
-                <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="amazon_payments/shipping_method.phtml">
+                <block type="checkout/onepage_shipping_method" name="checkout.onepage.shipping_method" as="shipping_method" template="flatz_amazon_payments/shipping_method.phtml">
                     <block type="checkout/onepage_shipping_method_available" name="checkout.onepage.shipping_method.available" as="available" template="checkout/onepage/shipping_method/available.phtml"/>
                     <block type="checkout/onepage_shipping_method_additional" name="checkout.onepage.shipping_method.additional" as="additional" template="checkout/onepage/shipping_method/additional.phtml"/>
                 </block>
@@ -187,26 +188,26 @@
         </reference>
 
         <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
         </reference>
-    </checkout_amazon_payments_index>
+    </checkout_flatz_amazon_payments_index>
 
     <!--
     Amazon checkout shipping method
     -->
-    <checkout_amazon_payments_shippingmethod>
+    <checkout_flatz_amazon_payments_shippingmethod>
         <!-- Mage_Checkout -->
         <remove name="right"/>
         <remove name="left"/>
 
         <block type="checkout/onepage_shipping_method_available" name="root" output="toHtml" template="checkout/onepage/shipping_method/available.phtml"/>
 
-    </checkout_amazon_payments_shippingmethod>
+    </checkout_flatz_amazon_payments_shippingmethod>
 
     <!--
     Amazon checkout shipping method additional
     -->
-    <checkout_amazon_payments_additional>
+    <checkout_flatz_amazon_payments_additional>
         <!-- Mage_Checkout -->
         <remove name="right"/>
         <remove name="left"/>
@@ -214,12 +215,12 @@
         <block type="checkout/onepage_shipping_method_additional" name="root" output="toHtml" template="checkout/onepage/shipping_method/additional.phtml">
             <action method="setDontDisplayContainer"><param>1</param></action>
         </block>
-    </checkout_amazon_payments_additional>
+    </checkout_flatz_amazon_payments_additional>
 
     <!--
     Amazon checkout review
     -->
-    <checkout_amazon_payments_review translate="label">
+    <checkout_flatz_amazon_payments_review translate="label">
         <label>Amazon Payments Checkout Overview</label>
         <!-- Mage_Checkout -->
         <remove name="right"/>
@@ -239,16 +240,16 @@
             <block type="checkout/agreements" name="checkout.onepage.agreements" as="agreements" template="checkout/onepage/agreements.phtml"/>
             <block type="core/template" name="checkout.onepage.review.button" as="button" template="checkout/onepage/review/button.phtml"/>
         </block>
-    </checkout_amazon_payments_review>
+    </checkout_flatz_amazon_payments_review>
 
     <!--
     Full-page (no popup) authorize and redirect
     -->
-    <amazon_payments_checkout_authorize translate="label">
+    <flatz_amazon_payments_checkout_authorize translate="label">
         <reference name="content">
-            <block type="amazon_login/script" name="amazon_login.script.authorize" template="amazon_login/script_authorize.phtml" />
+            <block type="flatz_amazon_login/script" name="flatz_amazon_login.script.authorize" template="flatz_amazon_login/script_authorize.phtml" />
         </reference>
-    </amazon_payments_checkout_authorize>
+    </flatz_amazon_payments_checkout_authorize>
 
 
     <!--
@@ -256,20 +257,20 @@
     -->
     <catalog_product_view>
 
-        <block type="amazon_payments/button" name="addtocart-amazon-button" template="amazon_payments/button_shortcut.phtml" />
+        <block type="flatz_amazon_payments/button" name="addtocart-amazon-button" template="flatz_amazon_payments/button_shortcut.phtml" />
 
         <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
         </reference>
 
         <reference name="product.info.addtocart">
-            <action method="append" ifconfig="payment/amazon_payments/visible_on_product">
+            <action method="append" ifconfig="payment/flatz_amazon_payments/visible_on_product">
                 <block>addtocart-amazon-button</block>
             </action>
         </reference>
 
         <reference name="right">
-            <block type="amazon_payments/button" name="amazon_payments.button.right.logo" template="amazon_payments/button_badge.phtml" />
+            <block type="flatz_amazon_payments/button" name="flatz_amazon_payments.button.right.logo" template="flatz_amazon_payments/button_badge.phtml" />
         </reference>
 
     </catalog_product_view>
@@ -279,19 +280,19 @@
     -->
     <catalog_category_default>
         <reference name="right">
-            <block type="amazon_payments/button" name="amazon_payments.button.right.logo" template="amazon_payments/button_badge.phtml" />
+            <block type="flatz_amazon_payments/button" name="flatz_amazon_payments.button.right.logo" template="flatz_amazon_payments/button_badge.phtml" />
         </reference>
     </catalog_category_default>
 
     <catalog_category_layered>
         <reference name="right">
-            <block type="amazon_payments/button" name="amazon_payments.button.right.logo" template="amazon_payments/button_badge.phtml" />
+            <block type="flatz_amazon_payments/button" name="flatz_amazon_payments.button.right.logo" template="flatz_amazon_payments/button_badge.phtml" />
         </reference>
     </catalog_category_layered>
 
     <cms_index_index>
         <reference name="right">
-            <block type="amazon_payments/button" name="amazon_payments.button.right.logo" template="amazon_payments/button_badge.phtml" />
+            <block type="flatz_amazon_payments/button" name="flatz_amazon_payments.button.right.logo" template="flatz_amazon_payments/button_badge.phtml" />
         </reference>
     </cms_index_index>
 
@@ -300,7 +301,7 @@
     -->
     <firecheckout_index_index translate="label">
         <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
         </reference>
     </firecheckout_index_index>
 
@@ -309,43 +310,9 @@
     -->
     <opc_index_index translate="label">
         <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
+            <block type="core/template" name="flatz_amazon_payments.script" template="flatz_amazon_payments/script.phtml" />
         </reference>
     </opc_index_index>
 
-    <!--
-    OneStepCheckout.com checkout
-    -->
-    <onestepcheckout_index_index>
-
-        <reference name="head">
-            <block type="core/template" name="amazon_payments.script" template="amazon_payments/script.phtml" />
-        </reference>
-
-        <reference name="checkout.onepage">
-            <block type="amazon_payments/button" name="amazonpaymentsbutton" template="amazon_payments/onepage/button.phtml"/>
-        </reference>
-
-        <reference name="checkout.onepage.login">
-            <action method="setTemplate" ifconfig="payment/amazon_payments/enabled">
-                <template helper="amazon_payments/data/switchOnepageLoginTemplateIf">
-                    <template_amazon>amazon_payments/onepage/login.phtml</template_amazon>
-                    <template_default>checkout/onepage/login.phtml</template_default>
-                 </template>
-             </action>
-
-            <block type="core/text_list" name="col1_before" />
-            <block type="core/text_list" name="col2_before" />
-
-            <reference name="col1_before">
-                <block type="amazon_payments/button" name="AmazonPayButtonBefore" template="amazon_payments/onepage/button.phtml"/>
-            </reference>
-
-            <reference name="col2_before">
-                <block type="amazon_payments/button" name="AmazonPayButtonAdditional" template="amazon_payments/onepage/button.phtml"/>
-            </reference>
-        </reference>
-
-    </onestepcheckout_index_index>
 
 </layout>

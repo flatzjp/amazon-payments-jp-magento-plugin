@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_Order_Creditmemo extends Mage_Sales_Model_Order_Creditmemo
+class FLATz_AmazonPayments_Model_Order_Creditmemo extends Mage_Sales_Model_Order_Creditmemo
 {
 
     /**
@@ -17,7 +17,7 @@ class Amazon_Payments_Model_Order_Creditmemo extends Mage_Sales_Model_Order_Cred
     public function refund()
     {
 
-        if ($this->getOrder()->getPayment()->getMethodInstance()->getCode() != 'amazon_payments') {
+        if ($this->getOrder()->getPayment()->getMethodInstance()->getCode() != 'flatz_amazon_payments') {
             parent::refund();
             return;
         }

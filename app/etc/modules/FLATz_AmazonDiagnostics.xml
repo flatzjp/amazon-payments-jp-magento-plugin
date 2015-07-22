@@ -2,16 +2,16 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Diagnostics
+ * @package     FLATz_AmazonDiagnostics
  * @copyright   Copyright (c) 2015 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
-        <Amazon_Diagnostics>
+        <FLATz_AmazonDiagnostics>
             <active>true</active>
             <codePool>community</codePool>
-        </Amazon_Diagnostics>
+        </FLATz_AmazonDiagnostics>
     </modules>
 </config>

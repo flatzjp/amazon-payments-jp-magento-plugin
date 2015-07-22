@@ -4,7 +4,7 @@
  * Login with Amazon
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -12,19 +12,19 @@
 <layout version="0.1.0">
     <customer_account_login translate="label">
 
-        <block type="amazon_login/script" name="amazon_login.script" template="amazon_login/script.phtml" />
-        <block type="amazon_login/button" name="amazon_login.button" template="amazon_login/button.phtml" after="customer_form_login" />
+        <block type="flatz_amazon_login/script" name="flatz_amazon_login.script" template="flatz_amazon_login/script.phtml" />
+        <block type="flatz_amazon_login/button" name="flatz_amazon_login.button" template="flatz_amazon_login/button.phtml" after="customer_form_login" />
 
         <!-- ifconfig only works with action -->
         <reference name="before_body_end">
-            <action method="append" ifconfig="amazon_login/settings/enabled">
-                <block>amazon_login.script</block>
+            <action method="append" ifconfig="flatz_amazon_login/settings/enabled">
+                <block>flatz_amazon_login.script</block>
             </action>
         </reference>
 
         <reference name="content">
-            <action method="append" ifconfig="amazon_login/settings/enabled">
-                <block>amazon_login.button</block>
+            <action method="append" ifconfig="flatz_amazon_login/settings/enabled">
+                <block>flatz_amazon_login.button</block>
             </action>
         </reference>
     </customer_account_login>
@@ -32,12 +32,12 @@
 
     <customer_account_logoutsuccess>
         <reference name="content">
-            <block type="amazon_login/script" name="amazon_login.script.logout" template="amazon_login/script.phtml" />
+            <block type="flatz_amazon_login/script" name="flatz_amazon_login.script.logout" template="flatz_amazon_login/script.phtml" />
         </reference>
     </customer_account_logoutsuccess>
 
 
-    <amazon_login_customer_verify translate="label">
+    <flatz_amazon_login_customer_verify translate="label">
         <label>Login with Amazon</label>
         <remove name="right"/>
         <remove name="left"/>
@@ -47,16 +47,16 @@
             <block type="core/messages" name="global_messages" as="global_messages"/>
             <block type="core/messages" name="messages" as="messages"/>
 
-            <block type="amazon_login/verify" name="amazon_login.verify" template="amazon_login/verify.phtml">
+            <block type="flatz_amazon_login/verify" name="flatz_amazon_login.verify" template="flatz_amazon_login/verify.phtml">
 
             </block>
         </reference>
-   </amazon_login_customer_verify>
+   </flatz_amazon_login_customer_verify>
 
-   <amazon_login_customer_authorize translate="label">
+   <flatz_amazon_login_customer_authorize translate="label">
         <reference name="content">
-            <block type="amazon_login/script" name="amazon_login.script.authorize" template="amazon_login/script_authorize.phtml" />
+            <block type="flatz_amazon_login/script" name="flatz_amazon_login.script.authorize" template="flatz_amazon_login/script_authorize.phtml" />
         </reference>
-   </amazon_login_customer_authorize>
+   </flatz_amazon_login_customer_authorize>
 
 </layout>

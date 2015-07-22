@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Block_Onepage_Widget extends Mage_Checkout_Block_Onepage_Abstract
+class FLATz_AmazonPayments_Block_Onepage_Widget extends Mage_Checkout_Block_Onepage_Abstract
 {
     protected function _construct()
     {
@@ -30,7 +30,7 @@ class Amazon_Payments_Block_Onepage_Widget extends Mage_Checkout_Block_Onepage_A
      */
     public function getSellerId()
     {
-        return $this->helper('amazon_payments')->getSellerId();
+        return $this->helper('flatz_amazon_payments')->getSellerId();
     }
 
     /**

@@ -2,7 +2,7 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
@@ -19,10 +19,10 @@
                         <children>
                             <config>
                                 <children>
-                                    <amazon_login translate="title">
+                                    <flatz_amazon_login translate="title">
                                         <title>Login with Amazon</title>
                                         <sort_order>100</sort_order>
-                                    </amazon_login>
+                                    </flatz_amazon_login>
                                 </children>
                             </config>
                          </children>

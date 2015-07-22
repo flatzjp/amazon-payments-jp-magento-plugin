@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_Api extends Varien_Object
+class FLATz_AmazonPayments_Model_Api
 {
     const ORDER_PLATFORM_ID = 'A2K7HE1S3M5XJ';
 
@@ -21,7 +21,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
     const AUTH_STATUS_SUSPENDED = 'Suspended';
 
     protected $api;
-    protected $logFile = 'amazon.log';
+    protected $log_file = 'amazon.log';
 
     /**
      * Return and/or initiate Amazon's Client Library API
@@ -32,13 +32,13 @@ class Amazon_Payments_Model_Api extends Varien_Object
     {
         if (!$this->api) {
             $config = array(
-                'merchantId'         => $this->getConfig()->getSellerId($this->getStoreId()),
-                'accessKey'          => $this->getConfig()->getAccessKey($this->getStoreId()),
-                'secretKey'          => $this->getConfig()->getAccessSecret($this->getStoreId()),
-                'region'             => $this->getConfig()->getRegion($this->getStoreId()),
-                'environment'        => ($this->getConfig()->isSandbox($this->getStoreId())) ? 'sandbox' : 'live',
+                'merchantId'         => $this->getConfig()->getSellerId(),
+                'accessKey'          => $this->getConfig()->getAccessKey(),
+                'secretKey'          => $this->getConfig()->getAccessSecret(),
+                'region'             => $this->getConfig()->getRegion(),
+                'environment'        => ($this->getConfig()->isSandbox()) ? 'sandbox' : 'live',
                 'applicationName'    => 'Amazon Payments Magento Extension',
-                'applicationVersion' => (string) Mage::getConfig()->getNode('modules/Amazon_Payments/version'),
+                'applicationVersion' => current(Mage::getConfig()->getNode('modules/FLATz_AmazonPayments/version')),
                 'serviceURL'         => '',
                 'widgetURL'          => '',
                 'caBundleFile'       => '',
@@ -55,7 +55,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      */
     public function getConfig()
     {
-        return Mage::getSingleton('amazon_payments/config');
+        return Mage::getSingleton('flatz_amazon_payments/config');
     }
 
     /**
@@ -64,7 +64,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
     protected function _getRequiredParams()
     {
         return array(
-            'SellerId' => $this->getConfig()->getSellerId($this->getStoreId()),
+            'SellerId' => $this->getConfig()->getSellerId(),
         );
     }
 
@@ -73,7 +73,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      */
     protected function _isLoggingEnabled()
     {
-        return (Mage::getStoreConfig('payment/amazon_payments/debug'));
+        return (Mage::getStoreConfig('payment/flatz_amazon_payments/debug'));
     }
 
     /**
@@ -98,6 +98,9 @@ class Amazon_Payments_Model_Api extends Varien_Object
             $response = $this->getApi()->$method($requestObject);
         }
         catch (Exception $exception) {
+            if ($this->_isLoggingEnabled()) {
+                Mage::log('Request: ' . $method . "\n" . print_r($request, true), null, $this->log_file);
+            }
             Mage::logException($exception);
             Mage::throwException($exception);
         }
@@ -105,13 +108,13 @@ class Amazon_Payments_Model_Api extends Varien_Object
         // Debugging/Logging
         if ($this->_isLoggingEnabled()) {
 
-            Mage::log('Request: ' . $method . "\n" . print_r($request, true), null, $this->logFile);
+            Mage::log('Request: ' . $method . "\n" . print_r($request, true), null, $this->log_file);
 
             $time = round(microtime(TRUE) - $start_time, 2) . ' seconds.';
-            Mage::log($method . " Time: " . $time, null, $this->logFile);
+            Mage::log($method . " Time: " . $time, null, $this->log_file);
 
             if (isset($exception)) {
-                Mage::log($exception->__toString(), Zend_Log::ERR, $this->logFile);
+                Mage::log($exception->__toString(), Zend_Log::ERR, $this->log_file);
             }
             else {
 
@@ -123,7 +126,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
                         $fields[substr($methodName, 3)] = $response->$methodName();
                     }
                 }
-                Mage::log('Response: ' . print_r($fields, true), null, $this->logFile);
+                Mage::log('Response: ' . print_r($fields, true), null, $this->log_file);
             }
         }
 
@@ -139,7 +142,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      * @param string $softDescriptor    Description to be shown on the buyer’s payment instrument statement.
      * @param string $sellerAuthorizationNote   A description for the transaction that is displayed in emails to the buyer (also used for Sandbox Simulations).
      * @return OffAmazonPaymentsService_Model_AuthorizeResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_Authorize.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_Authorize.html
      */
     public function authorize($orderReferenceId, $authorizationReferenceId, $authorizationAmount, $authorizationCurrency, $captureNow = false, $softDescriptor = null, $sellerAuthorizationNote = null)
     {
@@ -153,7 +156,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
             'CaptureNow' => $captureNow,
         );
 
-        if (!$this->getConfig()->isAsync($this->getStoreId())) {
+        if (!$this->getConfig()->isAsync()) {
             $request['TransactionTimeout'] = 0; // Synchronous Mode
         }
 
@@ -186,7 +189,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      * @param string $captureCurrency
      * @param string $softDescriptor Description to be shown on the buyer’s payment instrument statement.
      * @return OffAmazonPaymentsService_Model_CaptureResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_Capture.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_Capture.html
      */
     public function capture($authReferenceId, $captureReferenceId, $captureAmount, $captureCurrency, $softDescriptor = null)
     {
@@ -199,7 +202,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
             ),
         );
 
-        if (!$this->getConfig()->isAsync($this->getStoreId())) {
+        if (!$this->getConfig()->isAsync()) {
             $request['TransactionTimeout'] = 0; // Synchronous Mode
         }
 
@@ -225,7 +228,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      * @param string $amazonOrderReferenceId
      * @param string $addressConsentToken
      * @return OffAmazonPaymentsService_Model_GetOrderReferenceDetailsResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_GetOrderReferenceDetails.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_GetOrderReferenceDetails.html
      */
     public function getOrderReferenceDetails($amazonOrderReferenceId, $addressConsentToken = null)
     {
@@ -235,7 +238,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
         );
 
         $response = $this->request('getOrderReferenceDetails', $request);
-
+        
         if ($response && $response->isSetGetOrderReferenceDetailsResult()) {
             $result = $response->getGetOrderReferenceDetailsResult();
             if ($result->isSetOrderReferenceDetails()) {
@@ -251,7 +254,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      *
      * @param string $amazonAuthorizationId
      * @return OffAmazonPaymentsService_Model_GetAuthorizationDetails
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_GetAuthorizationDetails.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_GetAuthorizationDetails.html
      */
     public function getAuthorizationDetails($amazonAuthorizationId)
     {
@@ -280,14 +283,14 @@ class Amazon_Payments_Model_Api extends Varien_Object
      * @param string $orderId
      * @param string $storeName
      * @return OffAmazonPaymentsService_Model_SetOrderReferenceDetailsResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_SetOrderReferenceDetails.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_SetOrderReferenceDetails.html
      */
     public function setOrderReferenceDetails($orderReferenceId, $orderAmount, $orderCurrency, $orderId = '', $storeName = '')
     {
         $request = array(
             'AmazonOrderReferenceId' => $orderReferenceId,
             'OrderReferenceAttributes' => array(
-                'PlatformId' => Amazon_Payments_Model_Api::ORDER_PLATFORM_ID,
+                'PlatformId' => FLATz_AmazonPayments_Model_Api::ORDER_PLATFORM_ID,
                 'OrderTotal' => array(
                     'Amount'       => $orderAmount,
                     'CurrencyCode' => $orderCurrency
@@ -316,7 +319,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      *
      * @param string $orderReferenceId
      * @return OffAmazonPaymentsService_Model_ConfirmOrderResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_ConfirmOrderReference.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_ConfirmOrderReference.html
      */
     public function confirmOrderReference($orderReferenceId)
     {
@@ -332,7 +335,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      *
      * @param string $orderReferenceId
      * @return OffAmazonPaymentsService_Model_CancelOrderReferenceResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_CancelOrderReference.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_CancelOrderReference.html
      */
     public function cancelOrderReference($orderReferenceId)
     {
@@ -347,7 +350,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      *
      * @param string $orderReferenceId
      * @return OffAmazonPaymentsService_Model_CloseOrderReferenceResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_CloseOrderReference.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_CloseOrderReference.html
      */
     public function closeOrderReference($orderReferenceId)
     {
@@ -367,7 +370,7 @@ class Amazon_Payments_Model_Api extends Varien_Object
      * @param string $sellerRefundNote
      * @param string $softDescriptor
      * @return OffAmazonPaymentsService_Model_RefundResponse
-     * @link http://docs.developer.amazonservices.com/en_US/off_amazon_payments/OffAmazonPayments_Refund.html
+     * @link http://docs.developer.amazonservices.com/en_US/off_flatz_amazon_payments/OffAmazonPayments_Refund.html
      */
     public function refund($captureReferenceId, $refundReferenceId, $refundAmount, $refundCurrency, $sellerRefundNote = null, $softDescriptor = null)
     {

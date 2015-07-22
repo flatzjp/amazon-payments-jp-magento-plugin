@@ -2,56 +2,56 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
-        <Amazon_Payments>
+        <FLATz_AmazonPayments>
             <version>1.3.0</version>
-        </Amazon_Payments>
+        </FLATz_AmazonPayments>
     </modules>
     <global>
         <blocks>
-            <amazon_payments>
-                <class>Amazon_Payments_Block</class>
-            </amazon_payments>
+            <flatz_amazon_payments>
+                <class>FLATz_AmazonPayments_Block</class>
+            </flatz_amazon_payments>
         </blocks>
         <models>
-            <amazon_payments>
-                <class>Amazon_Payments_Model</class>
-            </amazon_payments>
+            <flatz_amazon_payments>
+                <class>FLATz_AmazonPayments_Model</class>
+            </flatz_amazon_payments>
             <sales>
                 <rewrite>
-                    <order_creditmemo>Amazon_Payments_Model_Order_Creditmemo</order_creditmemo>
+                    <order_creditmemo>FLATz_AmazonPayments_Model_Order_Creditmemo</order_creditmemo>
                 </rewrite>
             </sales>
         </models>
         <helpers>
-            <amazon_payments>
-                <class>Amazon_Payments_Helper</class>
-            </amazon_payments>
+            <flatz_amazon_payments>
+                <class>FLATz_AmazonPayments_Helper</class>
+            </flatz_amazon_payments>
         </helpers>
 
         <rewrite>
-            <amazon_payments_checkout>
-                <from><![CDATA[#^/checkout/amazon_payments#]]></from>
-                <to>/amazon_payments/checkout</to>
-            </amazon_payments_checkout>
+            <flatz_amazon_payments_checkout>
+                <from><![CDATA[#^/checkout/flatz_amazon_payments#]]></from>
+                <to>/flatz_amazon_payments/checkout</to>
+            </flatz_amazon_payments_checkout>
         </rewrite>
 
         <resources>
-            <payments_setup>
+            <flatz_amazon_payments_setup>
                 <setup>
-                    <module>Amazon_Payments</module>
+                    <module>FLATz_AmazonPayments</module>
                     <class>Mage_Eav_Model_Entity_Setup</class>
                 </setup>
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </payments_setup>
+            </flatz_amazon_payments_setup>
         </resources>
 
     </global>
@@ -60,7 +60,7 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <Amazon_Payments after="Mage_Adminhtml">Amazon_Payments_Adminhtml</Amazon_Payments>
+                        <FLATz_AmazonPayments after="Mage_Adminhtml">FLATz_AmazonPayments_Adminhtml</FLATz_AmazonPayments>
                     </modules>
                 </args>
             </adminhtml>
@@ -70,85 +70,103 @@
         <layout>
             <updates>
                 <tax>
-                    <file>amazon_payments.xml</file>
+                    <file>flatz_amazon_payments.xml</file>
                 </tax>
             </updates>
         </layout>
         <events>
             <adminhtml_widget_container_html_before>
                 <observers>
-                    <amazon_payments>
-                        <class>Amazon_Payments_Model_Observer_Adminhtml</class>
+                    <flatz_amazon_payments>
+                        <class>FLATz_AmazonPayments_Model_Observer_Adminhtml</class>
                         <method>addAsyncButton</method>
-                    </amazon_payments>
+                    </flatz_amazon_payments>
                 </observers>
             </adminhtml_widget_container_html_before>
         </events>
+        <translate>
+            <modules>
+                <FLATz_AmazonPayments>
+                    <files>
+                        <default>FLATz_AmazonPayments.csv</default>
+                    </files>
+                </FLATz_AmazonPayments>
+            </modules>
+        </translate>        
     </adminhtml>
 
     <frontend>
         <secure_url>
             <cart_updatepost>/checkout/cart/updatePost</cart_updatepost>
-            <checkout_amazon>/checkout/amazon_payments</checkout_amazon>
-            <amazon_checkout>/amazon_payments/checkout</amazon_checkout>
+            <checkout_amazon>/checkout/flatz_amazon_payments</checkout_amazon>
+            <amazon_checkout>/flatz_amazon_payments/checkout</amazon_checkout>
         </secure_url>
         <routers>
-            <amazon_payments>
+            <flatz_amazon_payments>
                 <use>standard</use>
                 <args>
-                    <module>Amazon_Payments</module>
-                    <frontName>amazon_payments</frontName>
+                    <module>FLATz_AmazonPayments</module>
+                    <frontName>flatz_amazon_payments</frontName>
                 </args>
-            </amazon_payments>
+            </flatz_amazon_payments>
         </routers>
         <layout>
             <updates>
-                <amazon_payments>
-                    <file>amazon_payments.xml</file>
-                </amazon_payments>
+                <flatz_amazon_payments>
+                    <file>flatz_amazon_payments.xml</file>
+                </flatz_amazon_payments>
             </updates>
         </layout>
         <events>
             <controller_action_layout_load_before>
                 <observers>
-                   <amazon_payments_observer>
-                      <class>Amazon_Payments_Model_Observer_Onepage</class>
+                   <flatz_amazon_payments_observer>
+                      <class>FLATz_AmazonPayments_Model_Observer_Onepage</class>
                       <method>beforeLoadLayout</method>
-                   </amazon_payments_observer>
+                   </flatz_amazon_payments_observer>
                 </observers>
             </controller_action_layout_load_before>
             <sales_order_place_after>
                 <observers>
-                    <amazon_payments_observer>
-                        <class>Amazon_Payments_Model_Observer_Order</class>
+                    <flatz_amazon_payments_observer>
+                        <class>FLATz_AmazonPayments_Model_Observer_Order</class>
                         <method>updateCustomerAddress</method>
-                    </amazon_payments_observer>
+                    </flatz_amazon_payments_observer>
                 </observers>
             </sales_order_place_after>
             <controller_action_predispatch_checkout_cart_index>
                 <observers>
-                    <amazon_payments_observer>
-                        <class>Amazon_Payments_Model_Observer_Action</class>
+                    <flatz_amazon_payments_observer>
+                        <class>FLATz_AmazonPayments_Model_Observer_Action</class>
                         <method>secureCart</method>
-                    </amazon_payments_observer>
+                    </flatz_amazon_payments_observer>
                 </observers>
             </controller_action_predispatch_checkout_cart_index>
             <custom_quote_process>
                 <observers>
-                    <amazon_payments_observer>
-                        <class>Amazon_Payments_Model_Observer_Onepage</class>
+                    <flatz_amazon_payments_observer>
+                        <class>FLATz_AmazonPayments_Model_Observer_Onepage</class>
                         <method>clearShippingAddress</method>
-                    </amazon_payments_observer>
+                    </flatz_amazon_payments_observer>
                 </observers>
             </custom_quote_process>
         </events>
+        <translate>
+            <modules>
+                <FLATz_AmazonPayments>
+                    <files>
+                        <default>FLATz_AmazonPayments.csv</default>
+                    </files>
+                </FLATz_AmazonPayments>
+            </modules>
+        </translate>
     </frontend>
 
     <default>
         <payment>
-            <amazon_payments>
+            <flatz_amazon_payments>
                 <title>Amazon Payments</title>
-                <model>amazon_payments/paymentMethod</model>
+                <model>flatz_amazon_payments/paymentMethod</model>
                 <payment_action>authorize_capture</payment_action>
                 <show_pay_cart>1</show_pay_cart>
                 <order_status>processing</order_status>
@@ -158,16 +176,16 @@
                 <button_color>Gold</button_color>
                 <button_size>medium</button_size>
                 <button_badge>1</button_badge>
-            </amazon_payments>
+            </flatz_amazon_payments>
         </payment>
     </default>
 
     <crontab>
         <jobs>
-            <amazon_payments_async>
+            <flatz_amazon_payments_async>
                 <schedule><cron_expr>*/5 * * * *</cron_expr></schedule>
-                <run><model>amazon_payments/async::cron</model></run>
-            </amazon_payments_async>
+                <run><model>flatz_amazon_payments/async::cron</model></run>
+            </flatz_amazon_payments_async>
         </jobs>
     </crontab>
 

@@ -3,18 +3,18 @@
  * Amazon Login
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Login_Block_Button extends Mage_Core_Block_Template
+class FLATz_AmazonLogin_Block_Button extends Mage_Core_Block_Template
 {
     public function getButtonImage()
     {
         $button = '';
 
-        switch (Mage::getStoreConfig('amazon_login/settings/button_color')) {
+        switch (Mage::getStoreConfig('flatz_amazon_login/settings/button_color')) {
             case 'DarkGray':
                 $button .= '_drkgry_';
                 break;
@@ -26,9 +26,9 @@ class Amazon_Login_Block_Button extends Mage_Core_Block_Template
                 break;
         }
 
-        $isLarge = (Mage::getStoreConfig('amazon_login/settings/button_size') == 'large');
+        $isLarge = (Mage::getStoreConfig('flatz_amazon_login/settings/button_size') == 'large');
 
-        switch (Mage::getStoreConfig('amazon_login/settings/button_type')) {
+        switch (Mage::getStoreConfig('flatz_amazon_login/settings/button_type')) {
             case 'Login':
                 $button .= $isLarge ? '152x64' : '76x32';
                 break;

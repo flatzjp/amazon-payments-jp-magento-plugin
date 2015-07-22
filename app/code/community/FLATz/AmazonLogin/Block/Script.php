@@ -3,12 +3,12 @@
  * Amazon Login
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Login_Block_Script extends Mage_Core_Block_Template
+class FLATz_AmazonLogin_Block_Script extends Mage_Core_Block_Template
 {
 
     /**
@@ -18,7 +18,7 @@ class Amazon_Login_Block_Script extends Mage_Core_Block_Template
      */
     public function isPopup()
     {
-        return ($this->helper('amazon_login')->isPopup());
+        return ($this->helper('flatz_amazon_login')->isPopup());
     }
 
     /**
@@ -26,7 +26,7 @@ class Amazon_Login_Block_Script extends Mage_Core_Block_Template
      */
     public function isSandboxEnabled()
     {
-        return (Mage::getStoreConfig('payment/amazon_payments/sandbox'));
+        return (Mage::getStoreConfig('payment/flatz_amazon_payments/sandbox'));
     }
 
     /**
@@ -34,7 +34,7 @@ class Amazon_Login_Block_Script extends Mage_Core_Block_Template
      */
     public function getClientId()
     {
-        return Mage::getModel('amazon_login/api')->getClientId();
+        return Mage::getModel('flatz_amazon_login/api')->getClientId();
     }
 
     /**
@@ -42,7 +42,7 @@ class Amazon_Login_Block_Script extends Mage_Core_Block_Template
      */
     public function getAdditionalScope()
     {
-         return $this->helper('amazon_login')->getAdditionalScope();
+         return $this->helper('flatz_amazon_login')->getAdditionalScope();
     }
 
     /**
@@ -50,7 +50,7 @@ class Amazon_Login_Block_Script extends Mage_Core_Block_Template
      */
     public function getLoginAuthUrl()
     {
-         return $this->helper('amazon_login')->getLoginAuthUrl();
+         return $this->helper('flatz_amazon_login')->getLoginAuthUrl();
     }
 
 }

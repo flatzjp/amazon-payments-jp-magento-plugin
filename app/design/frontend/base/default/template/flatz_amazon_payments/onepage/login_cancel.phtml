@@ -3,7 +3,7 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -32,6 +32,6 @@
     // Cancel and log user out of Amazon
     function amazonCheckoutCancel() {
         amazon.Login.logout();
-        window.top.location.href = "<?php echo $this->getUrl('amazon_payments/checkout/clear'); ?>";
+        window.top.location.href = "<?php echo $this->getUrl('flatz_amazon_payments/checkout/clear'); ?>";
     }
 </script>

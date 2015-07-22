@@ -2,27 +2,27 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Diagnostics
+ * @package     FLATz_AmazonDiagnostics
  * @copyright   Copyright (c) 2015 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
-        <Amazon_Diagnostics>
-            <version>1.1.0</version>
-        </Amazon_Diagnostics>
+        <FLATz_AmazonDiagnostics>
+            <version>1.0.0</version>
+        </FLATz_AmazonDiagnostics>
     </modules>
     <global>
         <helpers>
-            <amazon_diagnostics>
-                <class>Amazon_Diagnostics_Helper</class>
-            </amazon_diagnostics>
+            <flatz_amazon_diagnostics>
+                <class>FLATz_AmazonDiagnostics_Helper</class>
+            </flatz_amazon_diagnostics>
         </helpers>
         <blocks>
-            <amazon_diagnostics>
-                <class>Amazon_Diagnostics_Block</class>
-            </amazon_diagnostics>
+            <flatz_amazon_diagnostics>
+                <class>FLATz_AmazonDiagnostics_Block</class>
+            </flatz_amazon_diagnostics>
         </blocks>
     </global>
     <admin>
@@ -30,10 +30,21 @@
             <adminhtml>
                 <args>
                     <modules>
-                        <amazon_diagnostics after="Mage_Adminhtml">Amazon_Diagnostics</amazon_diagnostics>
+                        <flatz_amazon_diagnostics after="Mage_Adminhtml">FLATz_AmazonDiagnostics</flatz_amazon_diagnostics>
                     </modules>
                 </args>
             </adminhtml>
         </routers>
     </admin>
+    <adminhtml>
+        <translate>
+            <modules>
+                <FLATz_AmazonDiagnostics>
+                    <files>
+                        <default>FLATz_AmazonDiagnostics.csv</default>
+                    </files>
+                </FLATz_AmazonDiagnostics>
+            </modules>
+        </translate>   
+    </adminhtml>
 </config>

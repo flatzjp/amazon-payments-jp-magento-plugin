@@ -4,8 +4,9 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
+ * @copyright   Copyright (c) 2015 FLATz Inc. 
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
@@ -14,7 +15,7 @@
     <payment>
 
       <groups>
-        <amazon_payments translate="label">
+        <flatz_amazon_payments translate="label">
           <label>Amazon Payments / Login and Pay with Amazon</label>
           <frontend_type>text</frontend_type>
           <sort_order>100</sort_order>
@@ -24,17 +25,9 @@
             <comment>
             <![CDATA[
 
-                    <a href="https://payments.amazon.com/" target="_blank"><img src="https://images-na.ssl-images-amazon.com/images/G/01/Iris3_US/en_US/inca/images/btnPaywAMZN-gld-Desktop-2x.png" /></a>
+                    <a href="https://payments.amazon.co.jp/" target="_blank"><img src="/skin/adminhtml/default/default/flatz_amazon_payments/images/btn-jp-pwa-gold-400x90.png" /></a>
                     <br/><br />
                     Login and Pay with Amazon helps you increase conversion, reduce fraud, acquire new customers and build loyalty.
-                    <br /><br />
-
-                    <strong>Configuring Amazon Payments</strong>
-                    <ol style="list-style:inside decimal;">
-                      <li>Register or login to retrieve your account keys: &nbsp<button onclick="javascript:window.open(&#39;https://sellercentral.amazon.com/hz/me/sp/signup?solutionProviderOptions=lwa%3Bmws-acc%3B&marketplaceId=AGWSWK15IEJJ7&solutionProviderToken=AAAAAQAAAAEAAAAQCz2wulRfR9nOADyzVQrq5wAAAHAIIULh6RBNvlw68WY5S9ATlmInlyg2PLVF44yUVowkyjvDZPhtLf3UYn6fshHlKqwR4qptfBeltbxLtLrrIfK6JoxzuWe9FRTnCfSey8a0sFKuL3mwNenjLyMC9BAN1xU0S6pebxA2mz8t8Y1v5Axi&solutionProviderId=A2K7HE1S3M5XJ&#39;, &#39;get_keys&#39,&#39;left=50, top=50, width=950, height=750&#39;); return false;" class="scalable" type="button"><span>Login to Get Your Keys</span></button>
-                      <li>Add your url to "Allowed JavaScript Origins" in <a href="https://sellercentral.amazon.com/" target="_blank">Amazon Seller Central</a>.
-                      <li>Under General->Web, enable "Use Secure URLs in Frontend." (HTTPS is required.)
-                    </ol>
 
                     <div style="clear:both;"></div>
             ]]>
@@ -46,8 +39,8 @@
               <label>Enabled</label>
               <frontend_type>select</frontend_type>
               <source_model>adminhtml/system_config_source_yesno</source_model>
-              <backend_model>amazon_payments/system_config_backend_enabled</backend_model>
-              <comment><model>amazon_payments/system_config_backend_enabled</model></comment>
+              <backend_model>flatz_amazon_payments/system_config_backend_enabled</backend_model>
+              <comment><model>flatz_amazon_payments/system_config_backend_enabled</model></comment>
               <sort_order>5</sort_order>
               <show_in_default>1</show_in_default>
               <show_in_website>1</show_in_website>
@@ -93,7 +86,7 @@
             <client_id translate="label">
                 <label>Client ID</label>
                 <frontend_type>text</frontend_type>
-                <backend_model>amazon_payments/system_config_backend_clientid</backend_model>
+                <backend_model>flatz_amazon_payments/system_config_backend_clientid</backend_model>
                 <sort_order>31</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -103,24 +96,22 @@
             <client_secret translate="label">
                 <label>Client Secret</label>
                 <frontend_type>text</frontend_type>
-                <backend_model>amazon_payments/system_config_backend_clientsecret</backend_model>
+                <backend_model>flatz_amazon_payments/system_config_backend_clientsecret</backend_model>
                 <sort_order>32</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
                 <show_in_store>0</show_in_store>
             </client_secret>
 
-            <!--
             <region translate="label">
                 <label>API Region</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_region</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_region</source_model>
                 <sort_order>35</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
                 <show_in_store>1</show_in_store>
             </region>
-            -->
 
             <heading_config translate="label">
                 <label>Checkout Configuration</label>
@@ -135,7 +126,7 @@
             <checkout_page translate="label">
                 <label>Checkout Page Type</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_checkoutpage</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_checkoutpage</source_model>
                 <sort_order>110</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -156,22 +147,12 @@
             <payment_action translate="label">
                 <label>Payment Action</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_paymentaction</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_paymentaction</source_model>
                 <sort_order>130</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
                 <show_in_store>0</show_in_store>
             </payment_action>
-
-            <payment_action_none_note translate="label">
-                <frontend_type>note</frontend_type>
-                <comment><![CDATA[You have set orders to not have funds authorized, so you should set the New Order Status below to a custom status other than "Pending" or "Processing." Funds will need to be captured from a third-party system.]]></comment>
-                <sort_order>135</sort_order>
-                <show_in_default>1</show_in_default>
-                <show_in_website>1</show_in_website>
-                <show_in_store>0</show_in_store>
-                <depends><payment_action>new</payment_action></depends>
-            </payment_action_none_note>
 
             <order_status translate="label">
                 <label>New Order Status</label>
@@ -260,7 +241,7 @@
             <button_type translate="label">
                 <label>Button Label</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_buttontype</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_buttontype</source_model>
                 <sort_order>410</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -270,7 +251,7 @@
             <button_color translate="label">
                 <label>Button Color</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_buttoncolor</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_buttoncolor</source_model>
                 <sort_order>430</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -280,7 +261,7 @@
             <button_size translate="label">
                 <label>Button Size</label>
                 <frontend_type>select</frontend_type>
-                <source_model>amazon_payments/system_config_source_buttonsize</source_model>
+                <source_model>flatz_amazon_payments/system_config_source_buttonsize</source_model>
                 <sort_order>440</sort_order>
                 <show_in_default>1</show_in_default>
                 <show_in_website>1</show_in_website>
@@ -344,7 +325,7 @@
             </restricted_ips>
 
           </fields>
-        </amazon_payments>
+        </flatz_amazon_payments>
       </groups>
 
     </payment>

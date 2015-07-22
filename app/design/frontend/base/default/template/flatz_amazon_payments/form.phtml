@@ -3,14 +3,14 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 ?>
 
 <ul class="form-list" id="payment_form_<?php echo $this->getMethodCode() ?>" style="display:none;">
-    <li class="form-alt"><?php echo Mage::app()->getLayout()->createBlock('amazon_payments/button')->setTemplate('amazon_payments/button.phtml')->toHtml(); ?></li>
+    <li class="form-alt"><?php echo Mage::app()->getLayout()->createBlock('flatz_amazon_payments/button')->setTemplate('flatz_amazon_payments/button.phtml')->toHtml(); ?></li>
 </ul>
 
 <script type='text/javascript'>
@@ -28,8 +28,8 @@ Element.prototype.triggerEvent = function(eventName) {
 // Display login on radio select
 $$("input[name='payment[method]']").each(function(el) {
     el.observe('change', function() {
-        if (el.value == 'amazon_payments') {
-            $$("#payment_form_amazon_payments img")[0].triggerEvent('click');
+        if (el.value == 'flatz_amazon_payments') {
+            $$("#payment_form_flatz_amazon_payments img")[0].triggerEvent('click');
         }
     })
 })

@@ -2,16 +2,16 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
-        <Amazon_Login>
+        <FLATz_AmazonLogin>
             <active>true</active>
             <codePool>community</codePool>
-        </Amazon_Login>
+        </FLATz_AmazonLogin>
     </modules>
 </config>

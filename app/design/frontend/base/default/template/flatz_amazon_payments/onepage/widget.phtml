@@ -3,7 +3,7 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -14,7 +14,7 @@
     <input type="checkbox" style="display:none;"> <!-- MageMonkey Mailchimp compatibility (their JS requires a form element to dynamically append input element) -->
 
     <input type="hidden" name="amazon_order_reference_id" value="" />
-    <input type="hidden" name="payment[method]" value="amazon_payments" />
+    <input type="hidden" name="payment[method]" value="flatz_amazon_payments" />
 
 
     <?php if ($this->isShowShip()) : ?>
@@ -137,7 +137,7 @@ AmazonWidgetStep.prototype = {
 };
 
 
-    var amazonWidgetStep = new AmazonWidgetStep('co-widget-form', "<?php echo $this->getUrl('amazon_payments/onepage/saveWidget', array('_secure' => true)) ?>");
+    var amazonWidgetStep = new AmazonWidgetStep('co-widget-form', "<?php echo $this->getUrl('flatz_amazon_payments/onepage/saveWidget', array('_secure' => true)) ?>");
 
     // Variables for Mage Onepage
     var quoteBaseGrandTotal = <?php echo (float)$this->getQuoteBaseGrandTotal(); ?>;
@@ -148,13 +148,13 @@ AmazonWidgetStep.prototype = {
     var payment = Class.create();
     payment.initWhatIsCvvListeners = function() { };
     payment.form = 'co-widget-form';
-    payment.currentMethod = 'amazon_payments';
+    payment.currentMethod = 'flatz_amazon_payments';
 
     // Overrides
     document.observe("dom:loaded", function() {
         checkout.gotoSection('widget', false);
         if (typeof shippingMethod != "undefined") {
-            shippingMethod.saveUrl = '<?php echo $this->getUrl('amazon_payments/onepage/saveShippingMethod', array('_secure' => true)) ?>';
+            shippingMethod.saveUrl = '<?php echo $this->getUrl('flatz_amazon_payments/onepage/saveShippingMethod', array('_secure' => true)) ?>';
         }
 
         // Add error checking for payment declines
@@ -230,7 +230,7 @@ new OffAmazonPayments.Widgets.AddressBook({
   },
   onError: function(error) {
     if (error.getErrorCode() == "BuyerSessionExpired") {
-         document.location.href = '<?php echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
+         document.location.href = '<?php echo $this->getUrl('checkout/flatz_amazon_payments/clear'); ?>';
     }
     console.log(error.getErrorMessage());
   }

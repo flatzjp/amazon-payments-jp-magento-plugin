@@ -3,12 +3,12 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Block_Adminhtml_Notifications extends Mage_Adminhtml_Block_Template
+class FLATz_AmazonPayments_Block_Adminhtml_Notifications extends Mage_Adminhtml_Block_Template
 {
 
     /**
@@ -18,7 +18,7 @@ class Amazon_Payments_Block_Adminhtml_Notifications extends Mage_Adminhtml_Block
      */
     public function isMissingPaymentConfig()
     {
-        $_config = Mage::getSingleton('amazon_payments/config');
+        $_config = Mage::getSingleton('flatz_amazon_payments/config');
 
         $stores = Mage::app()->getStores();
         foreach ($stores as $store) {

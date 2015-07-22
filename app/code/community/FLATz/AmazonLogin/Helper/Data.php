@@ -3,12 +3,12 @@
  * Login with Amazon Helper
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Login_Helper_Data extends Mage_Core_Helper_Abstract
+class FLATz_AmazonLogin_Helper_Data extends Mage_Core_Helper_Abstract
 {
     /**
      * Retrieve customer verify url
@@ -17,7 +17,7 @@ class Amazon_Login_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getVerifyUrl()
     {
-        return $this->_getUrl('amazon_login/customer/verify');
+        return $this->_getUrl('flatz_amazon_login/customer/verify');
     }
 
     /**
@@ -33,7 +33,7 @@ class Amazon_Login_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getAdditionalScope()
     {
-        $scope = trim(Mage::getStoreConfig('amazon_login/settings/additional_scope'));
+        $scope = trim(Mage::getStoreConfig('flatz_amazon_login/settings/additional_scope'));
         return ($scope) ? ' ' . $scope : '';
     }
 
@@ -44,7 +44,7 @@ class Amazon_Login_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function getLoginAuthUrl()
     {
-        return $this->_getUrl('amazon_login/customer/authorize', array('_forced_secure' => true));
+        return $this->_getUrl('flatz_amazon_login/customer/authorize', array('_forced_secure' => true));
     }
 
     /**
@@ -52,15 +52,15 @@ class Amazon_Login_Helper_Data extends Mage_Core_Helper_Abstract
      */
     public function isPopup()
     {
-        return (Mage::getStoreConfig('amazon_login/settings/popup'));
+        return (Mage::getStoreConfig('flatz_amazon_login/settings/popup'));
     }
 
     /**
-     * Is Amazon_Login enabled in config?
+     * Is FLATz_AmazonLogin enabled in config?
      */
     public function isEnabled()
     {
-        return (Mage::getStoreConfig('amazon_login/settings/enabled'));
+        return (Mage::getStoreConfig('flatz_amazon_login/settings/enabled'));
     }
 
 

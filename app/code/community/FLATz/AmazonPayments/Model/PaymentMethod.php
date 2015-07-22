@@ -3,19 +3,20 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
+ * @copyright   Copyright (c) 2015 FLATz Inc.
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abstract
+class FLATz_AmazonPayments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abstract
 {
 
     // Unique internal payment method identifier
-    protected $_code                    = 'amazon_payments';
+    protected $_code                    = 'flatz_amazon_payments';
 
-    protected $_formBlockType           = 'amazon_payments/form';
-    //protected $_infoBlockType           = 'amazon_payments/info';
+    protected $_formBlockType           = 'flatz_amazon_payments/form';
+    //protected $_infoBlockType           = 'flatz_amazon_payments/info';
 
     protected $_canAuthorize            = true;  // Can authorize online?
     protected $_canCapture              = true;  // Can capture funds online?
@@ -33,11 +34,9 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
     /**
      * Return Amazon API
      */
-    protected function _getApi($storeId = null)
+    protected function _getApi()
     {
-        $_api = Mage::getModel('amazon_payments/api');
-        $_api->setStoreId($storeId);
-        return $_api;
+        return Mage::getSingleton('flatz_amazon_payments/api');
     }
 
     /**
@@ -54,7 +53,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      */
     protected function _getSoftDescriptor()
     {
-        return substr($this->_getApi()->getConfig()->getStoreName(), 0, 16); // 16 chars max
+        return $this->_getApi()->getConfig()->getStoreName();
     }
 
     /**
@@ -114,14 +113,14 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         $sellerAuthorizationNote = null;
 
         // Sandbox simulation testing for Stand Alone Checkout
-        if ($payment->getAdditionalInformation('sandbox') && $this->_getApi($order->getStoreId())->getConfig()->isSandbox()) {
+        if ($payment->getAdditionalInformation('sandbox') && $this->_getApi()->getConfig()->isSandbox()) {
             $sellerAuthorizationNote = $payment->getAdditionalInformation('sandbox');
         }
 
         // For core and third-party checkouts, may test credit card decline by uncommenting:
         //$sellerAuthorizationNote = '{"SandboxSimulation": {"State":"Declined", "ReasonCode":"InvalidPaymentMethod", "PaymentMethodUpdateTimeInMins":5}}';
 
-        $result = $this->_getApi($order->getStoreId())->authorize(
+        $result = $this->_getApi()->authorize(
             $payment->getTransactionId(),
             $this->_getMagentoReferenceId($payment) . '-auth',
             $amount,
@@ -134,9 +133,9 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         $status = $result->getAuthorizationStatus();
 
         switch ($status->getState()) {
-            case Amazon_Payments_Model_Api::AUTH_STATUS_PENDING:
-            case Amazon_Payments_Model_Api::AUTH_STATUS_OPEN:
-            case Amazon_Payments_Model_Api::AUTH_STATUS_CLOSED:
+            case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_PENDING:
+            case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_OPEN:
+            case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_CLOSED:
 
                 $payment->setTransactionId($result->getAmazonAuthorizationId());
                 $payment->setParentTransactionId($payment->getAdditionalInformation('order_reference'));
@@ -167,29 +166,29 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
                     }
 
                     $transactionType = Mage_Sales_Model_Order_Payment_Transaction::TYPE_CAPTURE;
-                    $message = Mage::helper('payment')->__('Authorize and capture request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
+                    $message = Mage::helper('flatz_amazon_payments')->__('Authorize and capture request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
                 }
                 else {
                     $transactionType = Mage_Sales_Model_Order_Payment_Transaction::TYPE_AUTH;
-                    $message = Mage::helper('payment')->__('Authorize request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
+                    $message = Mage::helper('flatz_amazon_payments')->__('Authorize request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
                 }
 
                 $payment->addTransaction($transactionType, null, false, $message);
 
                 break;
 
-            case Amazon_Payments_Model_Api::AUTH_STATUS_DECLINED:
+            case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_DECLINED:
                 // Cancel order reference
                 if ($status->getReasonCode() == 'TransactionTimedOut') {
-                    $this->_getApi($order->getStoreId())->cancelOrderReference($payment->getTransactionId());
+                    $this->_getApi()->cancelOrderReference($payment->getTransactionId());
                 }
 
                 $this->_setErrorCheck();
-                Mage::throwException("Amazon could not process your order.\n\n" . $status->getReasonCode() . " (" . $status->getState() . ")\n" . $status->getReasonDescription());
+                Mage::throwException(Mage::helper('flatz_amazon_payments')->__("Amazon could not process your order.") . "\n\n" . $status->getReasonCode() . " (" . $status->getState() . ")\n" . $status->getReasonDescription());
                 break;
             default:
                 $this->_setErrorCheck();
-                Mage::throwException('Amazon could not process your order.');
+                Mage::throwException(Mage::helper('flatz_amazon_payments')->__("Amazon could not process your order."));
                 break;
         }
 
@@ -201,7 +200,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      * @param Varien_Object $payment
      * @param float $amount
      *
-     * @return Amazon_Payments_Model_PaymentMethod
+     * @return FLATz_AmazonPayments_Model_PaymentMethod
      */
     public function order(Varien_Object $payment, $amount)
     {
@@ -215,7 +214,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
             $orderReferenceId = Mage::getSingleton('checkout/session')->getAmazonOrderReferenceId();
 
             if (!$orderReferenceId) {
-                Mage::throwException('Please log in to your Amazon account by clicking the Amazon pay button.');
+                Mage::throwException(Mage::helper('flatz_amazon_payments')->__('Please log in to your Amazon account by clicking the Amazon pay button.'));
             }
 
             $payment->setAdditionalInformation('order_reference', $orderReferenceId);
@@ -243,7 +242,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
             $apiResult = $this->_getApi()->confirmOrderReference($orderReferenceId);
         }
         catch (Exception $e) {
-            Mage::throwException("Please try another Amazon payment method." . "\n\n" . substr($e->getMessage(), 0, strpos($e->getMessage(), 'Stack trace')));
+            Mage::throwException(Mage::helper('flatz_amazon_payments')->__("Please try another Amazon payment method.") . "\n\n" . substr($e->getMessage(), 0, strpos($e->getMessage(), 'Stack trace')));
             $this->_setErrorCheck();
             return;
         }
@@ -251,10 +250,10 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         $payment->setIsTransactionClosed(false);
         $payment->setSkipOrderProcessing(true);
 
-        $comment  = $this->getConfigData('is_async') ? 'Asynchronous ' : '';
-        $comment .=  $this->_getApi()->getConfig()->isSandbox() ? 'Sandbox ' : '';
-        $comment .= 'Order of %s sent to Amazon Payments.';
-        $message = Mage::helper('payment')->__($comment, $order->getStore()->convertPrice($amount, true, false));
+        $comment  = $this->getConfigData('is_async') ? Mage::helper('flatz_amazon_payments')->__('Asynchronous ') : '';
+        $comment .= $this->_getApi()->getConfig()->isSandbox() ? Mage::helper('flatz_amazon_payments')->__('Sandbox ') : '';
+        $comment .= Mage::helper('flatz_amazon_payments')->__('Order of %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
+        $message = $comment;
 
         $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER, null, false, $message);
 
@@ -281,7 +280,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      * @param Varien_Object $payment
      * @param float $amount
      *
-     * @return Amazon_Payments_Model_PaymentMethod
+     * @return FLATz_AmazonPayments_Model_PaymentMethod
      */
     public function authorize(Varien_Object $payment, $amount, $captureNow = false)
     {
@@ -295,7 +294,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      * @param Varien_Object $payment
      * @param float $amount
      *
-     * @return Amazon_Payments_Model_PaymentMethod
+     * @return FLATz_AmazonPayments_Model_PaymentMethod
      */
     public function capture(Varien_Object $payment, $amount)
     {
@@ -304,9 +303,9 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
 
         $order = $payment->getOrder();
 
-        $result = $this->_getApi($order->getStoreId())->capture(
+        $result = $this->_getApi()->capture(
             $authReferenceId,
-            $authReferenceId,
+            $this->_getMagentoReferenceId($payment) . '-capture',
             $amount,
             $order->getBaseCurrencyCode(),
             $this->_getSoftDescriptor()
@@ -317,20 +316,18 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
 
             // Error handling
             switch ($status->getState()) {
-                case Amazon_Payments_Model_Api::AUTH_STATUS_PENDING:
-                    Mage::getSingleton('adminhtml/session')->addError('The invoice you are trying to create is for an authorization that is more than 7 days old. A capture request has been made. Please try and create this invoice again in 1 hour, allowing time for the capture to process.');
-                    // cont'd...
-                case Amazon_Payments_Model_Api::AUTH_STATUS_DECLINED:
-                case Amazon_Payments_Model_Api::AUTH_STATUS_CLOSED:
+                case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_PENDING:
+                case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_DECLINED:
+                case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_CLOSED:
                     $this->_setErrorCheck();
-                    Mage::throwException('Amazon Payments capture error: ' . $status->getReasonCode() . ' - ' . $status->getReasonDescription());
+                    Mage::throwException(Mage::helper('flatz_amazon_payments')->__('Amazon Payments capture error: ') . $status->getReasonCode() . ' - ' . $status->getReasonDescription());
                     break;
-                case Amazon_Payments_Model_Api::AUTH_STATUS_COMPLETED:
+                case FLATz_AmazonPayments_Model_Api::AUTH_STATUS_COMPLETED:
                     // Already captured.
                     break;
                 default:
                     $this->_setErrorCheck();
-                    Mage::throwException('Amazon Payments capture error.');
+                    Mage::throwException(Mage::helper('flatz_amazon_payments')->__('Amazon Payments capture error.'));
                     break;
             }
 
@@ -341,7 +338,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         }
         else {
             $this->_setErrorCheck();
-            Mage::throwException('Unable to capture payment at this time. Please try again later.');
+            Mage::throwException(Mage::helper('flatz_amazon_payments')->__('Unable to capture payment at this time. Please try again later.'));
         }
 
         return $this;
@@ -353,12 +350,12 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
     public function refund(Varien_Object $payment, $amount)
     {
         if (!$this->canRefund()) {
-            Mage::throwException('Unable to refund.');
+            Mage::throwException(Mage::helper('flatz_amazon_payments')->__('Unable to refund.'));
         }
 
         $order = $payment->getOrder();
 
-        $result = $this->_getApi($order->getStoreId())->refund(
+        $result = $this->_getApi()->refund(
             $payment->getRefundTransactionId(),
             $this->_getMagentoReferenceId($payment) . substr(md5($this->_getMagentoReferenceId($payment) . microtime() ),-4) . '-refund',
             $amount,
@@ -370,7 +367,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         $payment->setTransactionId($result->getAmazonRefundId());
         $payment->setParentTransactionId($payment->getRefundTransactionId());
 
-        $message = Mage::helper('payment')->__('A refund request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
+        $message = Mage::helper('flatz_amazon_payments')->__('A refund request for %s sent to Amazon Payments.', $order->getStore()->convertPrice($amount, true, false));
         $payment->addTransaction(Mage_Sales_Model_Order_Payment_Transaction::TYPE_REFUND, null, false, $message);
 
         return $this;
@@ -397,7 +394,6 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      */
     protected function _void(Varien_Object $payment)
     {
-        $order = $payment->getOrder();
         $orderTransaction = $payment->lookupTransaction(false, Mage_Sales_Model_Order_Payment_Transaction::TYPE_ORDER);
 
         if (!$orderTransaction) {
@@ -408,7 +404,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
         }
 
         if ($orderTransaction) {
-            $this->_getApi($order->getStoreId())->cancelOrderReference($orderTransactionId);
+            $this->_getApi()->cancelOrderReference($orderTransactionId);
         }
         return $this;
     }
@@ -457,7 +453,7 @@ class Amazon_Payments_Model_PaymentMethod extends Mage_Payment_Model_Method_Abst
      */
     public function canUseCheckout()
     {
-        return (Mage::getSingleton('amazon_payments/config')->isEnabled() && Mage::helper('amazon_payments')->isEnableProductPayments() && ((Mage::helper('amazon_payments')->isCheckoutAmazonSession() && $this->getConfigData('checkout_page') == 'onepage') || $this->getConfigData('use_in_checkout')));
+        return (Mage::getSingleton('flatz_amazon_payments/config')->isEnabled() && Mage::helper('flatz_amazon_payments')->isEnableProductPayments() && ((Mage::helper('flatz_amazon_payments')->isCheckoutAmazonSession() && $this->getConfigData('checkout_page') == 'onepage') || $this->getConfigData('use_in_checkout')));
     }
 
 

@@ -3,41 +3,41 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Model_Config
+class FLATz_AmazonPayments_Model_Config
 {
     /**#@+
      * Paths to Payment Method config
      */
 
-    const CONFIG_XML_PATH_ENABLED        = 'payment/amazon_payments/enabled';
-    const CONFIG_XML_PATH_CLIENT_ID      = 'amazon_login/settings/client_id';
-    const CONFIG_XML_PATH_CLIENT_SECRET  = 'amazon_login/settings/client_secret';
-    const CONFIG_XML_PATH_SELLER_ID      = 'payment/amazon_payments/seller_id';
-    const CONFIG_XML_PATH_ACCESS_KEY     = 'payment/amazon_payments/access_key';
-    const CONFIG_XML_PATH_ACCESS_SECRET  = 'payment/amazon_payments/access_secret';
-    const CONFIG_XML_PATH_REGION         = 'payment/amazon_payments/region';
-    const CONFIG_XML_PATH_SANDBOX        = 'payment/amazon_payments/sandbox';
-    const CONFIG_XML_PATH_DEBUG          = 'payment/amazon_payments/debug';
-    const CONFIG_XML_PATH_CHECKOUT_PAGE  = 'payment/amazon_payments/checkout_page';
-    const CONFIG_XML_PATH_PAYMENT_ACTION = 'payment/amazon_payments/payment_action';
-    const CONFIG_XML_PATH_ORDER_STATUS   = 'payment/amazon_payments/order_status';
-    const CONFIG_XML_PATH_SHOW_PAY_CART  = 'payment/amazon_payments/show_pay_cart';
-    const CONFIG_XML_PATH_STORE_NAME     = 'payment/amazon_payments/store_name';
-    const CONFIG_XML_PATH_SECURE_CART    = 'payment/amazon_payments/secure_cart';
-    const CONFIG_XML_PATH_IS_ASYNC       = 'payment/amazon_payments/is_async';
-    const CONFIG_XML_PATH_RESTRICTED_IPS = 'payment/amazon_payments/restricted_ips';
+    const CONFIG_XML_PATH_ENABLED        = 'payment/flatz_amazon_payments/enabled';
+    const CONFIG_XML_PATH_CLIENT_ID      = 'payment/flatz_amazon_payments/client_id';
+    const CONFIG_XML_PATH_CLIENT_SECRET  = 'payment/flatz_amazon_payments/client_secret';
+    const CONFIG_XML_PATH_SELLER_ID      = 'payment/flatz_amazon_payments/seller_id';
+    const CONFIG_XML_PATH_ACCESS_KEY     = 'payment/flatz_amazon_payments/access_key';
+    const CONFIG_XML_PATH_ACCESS_SECRET  = 'payment/flatz_amazon_payments/access_secret';
+    const CONFIG_XML_PATH_REGION         = 'payment/flatz_amazon_payments/region';
+    const CONFIG_XML_PATH_SANDBOX        = 'payment/flatz_amazon_payments/sandbox';
+    const CONFIG_XML_PATH_DEBUG          = 'payment/flatz_amazon_payments/debug';
+    const CONFIG_XML_PATH_CHECKOUT_PAGE  = 'payment/flatz_amazon_payments/checkout_page';
+    const CONFIG_XML_PATH_PAYMENT_ACTION = 'payment/flatz_amazon_payments/payment_action';
+    const CONFIG_XML_PATH_ORDER_STATUS   = 'payment/flatz_amazon_payments/order_status';
+    const CONFIG_XML_PATH_SHOW_PAY_CART  = 'payment/flatz_amazon_payments/show_pay_cart';
+    const CONFIG_XML_PATH_STORE_NAME     = 'payment/flatz_amazon_payments/store_name';
+    const CONFIG_XML_PATH_SECURE_CART    = 'payment/flatz_amazon_payments/secure_cart';
+    const CONFIG_XML_PATH_IS_ASYNC       = 'payment/flatz_amazon_payments/is_async';
+    const CONFIG_XML_PATH_RESTRICTED_IPS = 'payment/flatz_amazon_payments/restricted_ips';
 
-    const CONFIG_XML_PATH_BUTTON_TYPE    = 'payment/amazon_payments/button_type';
-    const CONFIG_XML_PATH_BUTTON_COLOR   = 'payment/amazon_payments/button_color';
-    const CONFIG_XML_PATH_BUTTON_SIZE    = 'payment/amazon_payments/button_size';
-    const CONFIG_XML_PATH_BUTTON_BADGE   = 'payment/amazon_payments/button_badge';
+    const CONFIG_XML_PATH_BUTTON_TYPE    = 'payment/flatz_amazon_payments/button_type';
+    const CONFIG_XML_PATH_BUTTON_COLOR   = 'payment/flatz_amazon_payments/button_color';
+    const CONFIG_XML_PATH_BUTTON_SIZE    = 'payment/flatz_amazon_payments/button_size';
+    const CONFIG_XML_PATH_BUTTON_BADGE   = 'payment/flatz_amazon_payments/button_badge';
 
-    const CONFIG_XML_PATH_LOGIN_ENABLED  = 'amazon_login/settings/enabled';
+    const CONFIG_XML_PATH_LOGIN_ENABLED  = 'flatz_amazon_login/settings/enabled';
 
 
     /**

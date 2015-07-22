@@ -3,12 +3,12 @@
  * Access Amazon's API
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Login_Model_Api
+class FLATz_AmazonLogin_Model_Api
 {
 
     private $http_client_config = array(
@@ -20,7 +20,7 @@ class Amazon_Login_Model_Api
      */
     public function getClientId()
     {
-        return trim(Mage::getStoreConfig('amazon_login/settings/client_id'));
+        return trim(Mage::getStoreConfig('flatz_amazon_login/settings/client_id'));
     }
 
     /**
@@ -28,7 +28,7 @@ class Amazon_Login_Model_Api
      */
     public function getClientSecret()
     {
-        return trim(Mage::getStoreConfig('amazon_login/settings/client_secret'));
+        return trim(Mage::getStoreConfig('flatz_amazon_login/settings/client_secret'));
     }
 
     /**
@@ -42,13 +42,12 @@ class Amazon_Login_Model_Api
      */
     public function request($path, array $postParams = array())
     {
-        $sandbox = (Mage::getStoreConfig('payment/amazon_payments/sandbox')) ? 'sandbox.' : '';
+        $sandbox = (Mage::getStoreConfig('payment/flatz_amazon_payments/sandbox')) ? '-sandbox' : '';
 
         $client = new Zend_Http_Client();
-        $client->setUri("https://api.{$sandbox}amazon.com/$path");
+        $client->setUri("https://api{$sandbox}.amazon.co.jp/$path");
         $client->setConfig($this->http_client_config);
         $client->setMethod($postParams ? 'POST' : 'GET');
-
         foreach ($postParams as $key => $value) {
             $client->setParameterPost($key, $value);
         }

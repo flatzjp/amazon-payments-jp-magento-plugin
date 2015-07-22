@@ -2,63 +2,63 @@
 <!--
 /**
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
  */
 -->
 <config>
     <modules>
-        <Amazon_Login>
+        <FLATz_AmazonLogin>
             <version>0.1.0</version>
-        </Amazon_Login>
+        </FLATz_AmazonLogin>
     </modules>
     <global>
         <blocks>
-            <amazon_login>
-                <class>Amazon_Login_Block</class>
-            </amazon_login>
+            <flatz_amazon_login>
+                <class>FLATz_AmazonLogin_Block</class>
+            </flatz_amazon_login>
         </blocks>
         <models>
-            <amazon_login>
-                <class>Amazon_Login_Model</class>
+            <flatz_amazon_login>
+                <class>FLATz_AmazonLogin_Model</class>
                 <resourceModel>login_mysql4</resourceModel>
-            </amazon_login>
+            </flatz_amazon_login>
             <login_mysql4>
-                <class>Amazon_Login_Model_Resource</class>
+                <class>FLATz_AmazonLogin_Model_Resource</class>
                 <entities>
                     <login>
-                        <table>amazon_login</table>
+                        <table>flatz_amazon_login</table>
                     </login>
                 </entities>
             </login_mysql4>
         </models>
 
         <resources>
-            <login_setup>
+            <flatz_amazon_login_setup>
                 <setup>
-                    <module>Amazon_Login</module>
+                    <module>FLATz_AmazonLogin</module>
                 </setup>
                 <connection>
                     <use>core_setup</use>
                 </connection>
-            </login_setup>
-            <login_write>
+            </flatz_amazon_login_setup>
+            <flatz_amazon_write>
                 <connection>
                     <use>core_write</use>
                 </connection>
-            </login_write>
-            <login_read>
+            </flatz_amazon_write>
+            <flatz_amazon_read>
                 <connection>
                     <use>core_read</use>
                 </connection>
-            </login_read>
+            </flatz_amazon_read>
         </resources>
 
         <helpers>
-            <amazon_login>
-                <class>Amazon_Login_Helper</class>
-            </amazon_login>
+            <flatz_amazon_login>
+                <class>FLATz_AmazonLogin_Helper</class>
+            </flatz_amazon_login>
         </helpers>
     </global>
 
@@ -66,28 +66,49 @@
 
     <frontend>
         <secure_url>
-            <amazon_login_verify>/amazon_login/customer/verify</amazon_login_verify>
+            <flatz_amazon_login_verify>/flatz_amazon_login/customer/verify</flatz_amazon_login_verify>
         </secure_url>
         <routers>
-            <amazon_login>
+            <flatz_amazon_login>
                 <use>standard</use>
                 <args>
-                    <module>Amazon_Login</module>
-                    <frontName>amazon_login</frontName>
+                    <module>FLATz_AmazonLogin</module>
+                    <frontName>flatz_amazon_login</frontName>
                 </args>
-            </amazon_login>
+            </flatz_amazon_login>
         </routers>
         <layout>
             <updates>
-                <amazon_login>
-                    <file>amazon_login.xml</file>
-                </amazon_login>
+                <flatz_amazon_login>
+                    <file>flatz_amazon_login.xml</file>
+                </flatz_amazon_login>
             </updates>
-        </layout>
+        </layout>        
+        <translate>
+            <modules>
+                <FLATz_AmazonLogin>
+                    <files>
+                        <default>FLATz_AmazonLogin.csv</default>
+                    </files>
+                </FLATz_AmazonLogin>
+            </modules>
+        </translate>
     </frontend>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <FLATz_AmazonLogin>
+                    <files>
+                        <default>FLATz_AmazonLogin.csv</default>
+                    </files>
+                </FLATz_AmazonLogin>
+            </modules>
+        </translate>
+    </adminhtml>
 
     <default>
-        <amazon_login>
+        <flatz_amazon_login>
             <settings>
                 <enabled>1</enabled>
                 <popup>1</popup>
@@ -95,7 +116,7 @@
                 <button_color>Gold</button_color>
                 <button_size>medium</button_size>
             </settings>
-        </amazon_login>
+        </flatz_amazon_login>
     </default>
 
 </config>

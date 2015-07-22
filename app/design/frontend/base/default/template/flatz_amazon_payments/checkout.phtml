@@ -3,7 +3,7 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -54,7 +54,7 @@
 
                 <?php echo $this->getChildHtml('review') ?>
 
-                <?php if ($this->helper('amazon_payments')->isAmazonSandbox()) : ?>
+                <?php if ($this->helper('flatz_amazon_payments')->isAmazonSandbox()) : ?>
                 <br />
                 <h3>Authorization Sandbox Simulation:</h3>
                 <textarea id="sandbox"></textarea>
@@ -79,7 +79,7 @@
 // Cancel and log user out of Amazon
 $('amazon-cancel').observe("click", function() {
   amazon.Login.logout();
-  window.top.location.href = "<?php echo $this->getUrl('amazon_payments/checkout/clear'); ?>";
+  window.top.location.href = "<?php echo $this->getUrl('flatz_amazon_payments/checkout/clear'); ?>";
 });
 
 
@@ -239,15 +239,15 @@ var opts = {
   <?php if ($this->getChild('shipping_method')->isShow()) : ?>
   shippingMethod : {
       id: "checkout-shipping-method-load",
-      url: "<?php echo $this->getUrl('checkout/amazon_payments/shippingMethod') ?>"
+      url: "<?php echo $this->getUrl('checkout/flatz_amazon_payments/shippingMethod') ?>"
   },
   <?php endif; ?>
   review : {
       id: "checkout-review-load",
-      url: "<?php echo $this->getUrl('checkout/amazon_payments/review') ?>"
+      url: "<?php echo $this->getUrl('checkout/flatz_amazon_payments/review') ?>"
   },
   save : {
-      url: "<?php echo $this->getUrl('checkout/amazon_payments/saveOrder') ?>"
+      url: "<?php echo $this->getUrl('checkout/flatz_amazon_payments/saveOrder') ?>"
   }
 }
 
@@ -283,7 +283,7 @@ new OffAmazonPayments.Widgets.AddressBook({
   },
   onError: function(error) {
     if (error.getErrorCode() == "BuyerSessionExpired") {
-         window.top.location.href = '<?php echo $this->getUrl('checkout/amazon_payments/clear'); ?>';
+         window.top.location.href = '<?php echo $this->getUrl('checkout/flatz_amazon_payments/clear'); ?>';
     }
     console.log(error.getErrorMessage());
   }

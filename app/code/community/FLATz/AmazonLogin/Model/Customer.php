@@ -3,12 +3,12 @@
  * Login with Amazon Customer Model
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
+class FLATz_AmazonLogin_Model_Customer extends Mage_Customer_Model_Customer
 {
     /**
      * Log user in via Amazon token
@@ -23,7 +23,7 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
 
         if ($amazonProfile && isset($amazonProfile['user_id']) && isset($amazonProfile['email'])) {
             // Load Amazon Login association
-            $row = Mage::getModel('amazon_login/login')->load($amazonProfile['user_id'], 'amazon_uid');
+            $row = Mage::getModel('flatz_amazon_login/login')->load($amazonProfile['user_id'], 'amazon_uid');
             
             if ($row->getLoginId()) {
                 // Load customer by id
@@ -40,7 +40,7 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
                 Mage::getSingleton('checkout/session')->setAmazonAccessTokenVerify($token);
 
                 Mage::app()->getResponse()
-                    ->setRedirect(Mage::helper('amazon_login')->getVerifyUrl() . '?redirect=' . $redirectOnVerify, 301)
+                    ->setRedirect(Mage::helper('flatz_amazon_login')->getVerifyUrl() . '?redirect=' . $redirectOnVerify, 301)
                     ->sendResponse();
 
                 exit;
@@ -54,7 +54,7 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
                 }
                 Mage::getSingleton('customer/session')->setCustomerAsLoggedIn($this);
 
-                // Use Pay with Amazon for checkout (if Amazon_Payments enabled)
+                // Use Pay with Amazon for checkout (if FLATz_AmazonPayments enabled)
                 Mage::getSingleton('checkout/session')->setAmazonAccessToken($token);
             }
 
@@ -69,7 +69,7 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
      */
     public function getAmazonProfile($token)
     {
-        return Mage::getModel('amazon_login/api')->request('user/profile?access_token=' . urlencode($token));
+        return Mage::getModel('flatz_amazon_login/api')->request('user/profile?access_token=' . urlencode($token));
     }
 
     /**
@@ -81,12 +81,17 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
     {
         // if the user only has a first name, handle accordingly
         $trimmedName = trim($name);
-        if(strpos($trimmedName,' ')===false) {
-            return array($trimmedName,'.');
+        $name_elements = explode(' ', $trimmedName);
+        if (count($name_elements) > 0) {
+            $firstName = array_shift($name_elements[0]);
+        } else {
+            $firstName = '.';
         }
-
-        $firstName = substr($name, 0, strrpos($name, ' '));
-        $lastName  = substr($name, strlen($firstName) + 1);
+        if (count($name_elements) > 0) {
+            $lastName = implode(' ', $name_elements);
+        } else {
+            $lastName = '.';
+        }
         return array($firstName, $lastName);
     }
 
@@ -128,7 +133,7 @@ class Amazon_Login_Model_Customer extends Mage_Customer_Model_Customer
      */
     public function createAssociation($amazonProfile, $customer_id)
     {
-        Mage::getModel('amazon_login/login')
+        Mage::getModel('flatz_amazon_login/login')
             ->setCustomerId($customer_id)
             ->setAmazonUid($amazonProfile['user_id'])
             ->save();

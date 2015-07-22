@@ -3,19 +3,19 @@
  * Amazon Payments
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
+class FLATz_AmazonPayments_Block_Button extends Mage_Core_Block_Template
 {
     /**
      * Return URL to use for checkout
      */
     public function getCheckoutUrl()
     {
-        return $this->helper('amazon_payments')->getCheckoutUrl();
+        return $this->helper('flatz_amazon_payments')->getCheckoutUrl();
     }
 
     /**
@@ -23,7 +23,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getOnepageCheckoutUrl()
     {
-        return $this->helper('amazon_payments')->getOnepageCheckoutUrl();
+        return $this->helper('flatz_amazon_payments')->getOnepageCheckoutUrl();
     }
 
     /**
@@ -38,7 +38,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getSellerId()
     {
-        return $this->helper('amazon_payments')->getSellerId();
+        return $this->helper('flatz_amazon_payments')->getSellerId();
     }
 
     /**
@@ -46,7 +46,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getLoginAuthUrl()
     {
-         return $this->getUrl('amazon_payments/checkout/authorize', array('_forced_secure'=>true));
+         return $this->getUrl('flatz_amazon_payments/checkout/authorize', array('_forced_secure'=>true));
     }
 
     /**
@@ -54,7 +54,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getAdditionalScope()
     {
-         return $this->helper('amazon_login')->getAdditionalScope();
+         return $this->helper('flatz_amazon_login')->getAdditionalScope();
     }
 
     /**
@@ -62,7 +62,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getButtonType()
     {
-         return Mage::getSingleton('amazon_payments/config')->getButtonType();
+         return Mage::getSingleton('flatz_amazon_payments/config')->getButtonType();
     }
 
     /**
@@ -70,7 +70,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getButtonSize()
     {
-         return Mage::getSingleton('amazon_payments/config')->getButtonSize();
+         return Mage::getSingleton('flatz_amazon_payments/config')->getButtonSize();
     }
 
     /**
@@ -78,7 +78,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function getButtonColor()
     {
-         return Mage::getSingleton('amazon_payments/config')->getButtonColor();
+         return Mage::getSingleton('flatz_amazon_payments/config')->getButtonColor();
     }
 
     /**
@@ -97,7 +97,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isAmazonLoginEnabled()
     {
-        return $this->helper('amazon_login')->isEnabled();
+        return $this->helper('flatz_amazon_login')->isEnabled();
     }
 
     /**
@@ -107,15 +107,15 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isAmazonPayButtonEnabled()
     {
-        if (!Mage::getSingleton('amazon_payments/config')->isEnabled()) {
+        if (!Mage::getSingleton('flatz_amazon_payments/config')->isEnabled()) {
             return false;
         }
         // Viewing single product
         else if (Mage::registry('current_product')) {
-             return $this->helper('amazon_payments')->isEnableProductPayments();
+             return $this->helper('flatz_amazon_payments')->isEnableProductPayments();
         }
         else {
-            return ($this->helper('amazon_payments')->isEnableProductPayments() && (!Mage::getSingleton('amazon_payments/config')->isCheckoutOnepage() || Mage::getSingleton('amazon_payments/config')->showPayOnCart()));
+            return ($this->helper('flatz_amazon_payments')->isEnableProductPayments() && (!Mage::getSingleton('flatz_amazon_payments/config')->isCheckoutOnepage() || Mage::getSingleton('flatz_amazon_payments/config')->showPayOnCart()));
         }
     }
 
@@ -126,7 +126,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isButtonBadgeEnabled()
     {
-        return $this->helper('amazon_payments')->isButtonBadgeEnabled();
+        return $this->helper('flatz_amazon_payments')->isButtonBadgeEnabled();
     }
 
     /**
@@ -134,7 +134,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isEnableProductPayments()
     {
-        return $this->helper('amazon_payments')->isEnableProductPayments();
+        return $this->helper('flatz_amazon_payments')->isEnableProductPayments();
     }
 
     /**
@@ -144,7 +144,7 @@ class Amazon_Payments_Block_Button extends Mage_Core_Block_Template
      */
     public function isPopup()
     {
-        return ($this->helper('amazon_login')->isPopup());
+        return ($this->helper('flatz_amazon_login')->isPopup());
     }
 
 }

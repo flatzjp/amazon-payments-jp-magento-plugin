@@ -3,7 +3,7 @@
  * Login with Amazon
  *
  * @category    Amazon
- * @package     Amazon_Login
+ * @package     FLATz_AmazonLogin
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
@@ -14,8 +14,7 @@
 
 <div class="col2-set">
 
-<p>This email address is currently associated with an existing customer account. Please log in to associate your Amazon account with this customer.</p>
-
+<p><?php echo $this->__("This email address is currently associated with an existing customer account. Please log in to associate your Amazon account with this customer."); ?></p>
     <form action="<?php echo $this->getPostActionUrl() ?>" method="post" id="login-form">
         <?php echo $this->getBlockHtml('formkey'); ?>
             <div class="col-1">

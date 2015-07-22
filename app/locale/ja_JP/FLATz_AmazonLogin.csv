@@ -1,0 +1,62 @@
+"Login with Amazon","Amazonログイン"
+"Settings","設定"
+"Client ID","Client ID"
+"Client Secret","Client Secret"
+"Pop-up","ポップアップ"
+"Button Style","ボタンスタイル"
+"Button Label","ボタンラベル"
+"Button Color","ボタンカラー"
+"Button Size","ボタンサイズ"
+"Advanced","高度な設定"
+"Additional Access Scope","追加のアクセススコープ"
+"Gold","Gold"
+"Dark Gray","Dark Gray"
+"Light Gray","Light Gray"
+"Medium","Medium"
+"Large","Large"
+"Login","ログイン"
+"Amazon logo","Amazonロゴ"
+"OR","または"
+"Verify Your Account","アカウントの確認"
+"Pop-up window or full-page redirect.","ポップアップウィンドウまたはフルページリダイレクト"
+"If ""No,"" add these URLs in Seller Central under ""Allowed Return URLs"":","もし、seller centerの「リダイレクトURL」に下記のURLを追加していない場合は追加してください。"
+"
+                Optional access scope strings during login.
+              ","ログイン中の追加のアクセススコープ"
+"
+            
+
+                    <a href=""http://login.amazon.com/"" target=""_blank""><img src=""http://g-ecx.images-amazon.com/images/G/01/lwa/common/images/lwa_dev_logo._V371482133_.png"" /></a>
+                    <br/>
+                    <strong>Setup</strong>
+                    <ol style=""list-style:inside decimal;"">
+                      <li>Access your client credentials by registering a new application through <a href=""https://sellercentral.amazon.co.jp/"" target=""_blank"">Amazon Seller Central Japan</a>.
+                      <li>Whitelist your domain under ""Allowed JavaScript Origins.""
+                      <li>Under General->Web, enable ""Use Secure URLs in Frontend."" (HTTPS is required.)
+                      <li>Amazon Payments (Login and Pay) is configured under Sales->Payment Methods.
+                    </ol>
+
+
+                    <div style=""clear:both;""></div>
+            
+            ","
+            
+
+                    <a href=""http://login.amazon.com/"" target=""_blank""><img src=""http://g-ecx.images-amazon.com/images/G/01/lwa/common/images/lwa_dev_logo._V371482133_.png"" /></a>
+                    <br/>
+                    <strong>セットアップ</strong>
+                    <ol style=""list-style:inside decimal;"">
+                      <li><a href=""https://sellercentral.amazon.co.jp/"" target=""_blank"">Amazon Seller Central Japan</a>で新しいアプリケーションを登録してクライアント認証情報にアクセスしてください。</li>
+                      <li><a href=""https://sellercentral.amazon.co.jp/"" target=""_blank"">Amazon Seller Central Japan</a>の「JavaScriptの種類」にドメインを追加してください。</li>
+                      <li>システム設定の全般>ウェブの「フロントエンドでセキュアURLを使う」を「はい」に設定してください。(HTTPS必須です)</li>
+                      <li>システム設定の受注管理>支払方法のAmazon ログイン & ペイメントの設定をしてください。</li>
+                    </ol>
+
+
+                    <div style=""clear:both;""></div>
+            
+            "
+"Error: Unable to perform HTTP request to Amazon API.","エラー: Amazon APIへのHTTPリクエストを実行できません。"
+"Client authentication failed. Please verify your Client ID and Client Secret.","クライアント認証に失敗しました。Client IDとClient Secretを確認してください。"
+"Successfully connected to Amazon API with Client ID and Client Secret.","Client IDとClient Secretを利用してAmazon APIに正常に接続されています。"
+"This email address is currently associated with an existing customer account. Please log in to associate your Amazon account with this customer.","このEメールアドレスは存在するアカウントに関連付けられています。このアカウントに関連するAmazonアカウントでログインしてください。"

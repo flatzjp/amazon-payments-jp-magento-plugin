@@ -3,12 +3,12 @@
  * Amazon Payments Checkout Controller
  *
  * @category    Amazon
- * @package     Amazon_Payments
+ * @package     FLATz_AmazonPayments
  * @copyright   Copyright (c) 2014 Amazon.com
  * @license     http://opensource.org/licenses/Apache-2.0  Apache License, Version 2.0
  */
 
-abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Controller_Action
+abstract class FLATz_AmazonPayments_Controller_Checkout extends Mage_Checkout_Controller_Action
 {
     protected $_amazonOrderReferenceId;
     protected $_checkoutUrl;
@@ -41,7 +41,7 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
         $token = htmlentities($this->getRequest()->getParam('access_token'));
 
         if ($token) {
-            $_amazonLogin = Mage::getModel('amazon_login/customer');
+            $_amazonLogin = Mage::getModel('flatz_amazon_login/customer');
 
             if (!Mage::getSingleton('customer/session')->isLoggedIn()) {
                 if (!$this->_getConfig()->isGuestCheckout() || !$this->_getOnepage()->getQuote()->isAllowedGuestCheckout()) {
@@ -61,7 +61,7 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
 
             // Full-page redirect (user did not sign in using popup)
             if ($this->getRequest()->getParam('nopopup')) {
-                $this->_redirectUrl(Mage::helper('amazon_payments')->getCheckoutUrl(false) . '#access_token=' . $token);
+                $this->_redirectUrl(Mage::helper('flatz_amazon_payments')->getCheckoutUrl(false) . '#access_token=' . $token);
 
             }
             // Redirect to clean URL
@@ -80,7 +80,7 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
      */
     public function clearSession()
     {
-        Mage::helper('amazon_payments/data')->clearSession();
+        Mage::helper('flatz_amazon_payments/data')->clearSession();
     }
 
 
@@ -129,24 +129,24 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
     /**
      * Get Amazon API
      *
-     * @return Amazon_Payments_Model_Api
+     * @return FLATz_AmazonPayments_Model_Api
      */
     protected function _getApi() {
-        return Mage::getModel('amazon_payments/api');
+        return Mage::getModel('flatz_amazon_payments/api');
     }
 
     /**
      * Get Payments config
      */
     protected function _getConfig() {
-        return Mage::getModel('amazon_payments/config');
+        return Mage::getModel('flatz_amazon_payments/config');
     }
 
 
     /**
      * Send Ajax redirect response
      *
-     * @return Amazon_Payments_CheckoutController
+     * @return FLATz_AmazonPayments_CheckoutController
      */
     protected function _ajaxRedirectResponse()
     {
@@ -160,17 +160,17 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
     /**
      * Get checkout model
      *
-     * @return Amazon_Payments_Model_Type_Checkout
+     * @return FLATz_AmazonPayments_Model_Type_Checkout
      */
     protected function _getCheckout()
     {
-        return Mage::getSingleton('amazon_payments/type_checkout');
+        return Mage::getSingleton('flatz_amazon_payments/type_checkout');
     }
 
     /**
      * Get onepage model
      *
-     * @return Amazon_Payments_Model_Type_Checkout
+     * @return FLATz_AmazonPayments_Model_Type_Checkout
      */
     protected function _getOnepage()
     {
@@ -191,49 +191,78 @@ abstract class Amazon_Payments_Controller_Checkout extends Mage_Checkout_Control
 
             // Split name into first/last
             $name      = $address->getName();
-            $firstName = substr($name, 0, strrpos($name, ' '));
-            $lastName  = substr($name, strlen($firstName) + 1);
+            $trimmedName = trim($name);
+            $name_elements = explode(' ', $trimmedName);
+            if (count($name_elements) > 0) {
+                $firstName = array_shift($name_elements);
+            } else {
+                $firstName = '.';
+            }
+            if (count($name_elements) > 0) {
+                $lastName = implode(' ', $name_elements);
+            } else {
+                $lastName = '.';
+            }
 
-            // Find Mage state/region ID
-            $regionModel = Mage::getModel('directory/region')->loadByCode($address->getStateOrRegion(), $address->getCountryCode());
-            $regionId    = $regionModel->getId();
-
+            if ($address->getCountryCode() == 'JP') {
+                $regionName = Mage::helper('flatz_amazon_payments')->getJpRegionNameToRegionName($address->getStateOrRegion());
+                $regionModel = Mage::getModel('directory/region')->loadByCode($regionName, $address->getCountryCode());
+                $regionId    = $regionModel->getId();
+            } else {
+                // Find Mage state/region ID
+                $regionModel = Mage::getModel('directory/region')->loadByCode($address->getStateOrRegion(), $address->getCountryCode());
+                $regionId    = $regionModel->getId();
+            }
             $data = array(
                 'firstname'   => $firstName,
                 'lastname'    => $lastName,
-                'street'      => array($address->getAddressLine1(), $address->getAddressLine2()),
-                'city'        => $address->getCity(),
-                'region'      => $address->getStateOrRegion(),
+                'street'      => array($address->getAddressLine2(), $address->getAddressLine3()),
+                'city'        => $address->getAddressLine1(),
                 'region_id'   => $regionId,
                 'postcode'    => $address->getPostalCode(),
                 'country_id'  => $address->getCountryCode(),
                 'telephone'   => ($address->getPhone()) ? $address->getPhone() : '-', // Mage requires phone number
                 'use_for_shipping' => true,
             );
-
+                       
             if ($email = Mage::getSingleton('checkout/session')->getCustomerEmail()) {
                 $data['email'] = $email;
             }
-
-
+            
+            
             // Set billing address (if allowed by scope)
             if ($orderReferenceDetails->getBillingAddress()) {
                 $billing = $orderReferenceDetails->getBillingAddress()->getPhysicalAddress();
                 $data['use_for_shipping'] = false;
 
                 $name      = $billing->getName();
-                $firstName = substr($name, 0, strrpos($name, ' '));
-                $lastName  = substr($name, strlen($firstName) + 1);
-
-                $regionModel = Mage::getModel('directory/region')->loadByCode($address->getStateOrRegion(), $address->getCountryCode());
-                $regionId    = $regionModel->getId();
-
+                $trimmedName = trim($name);
+                $name_elements = explode(' ', $trimmedName);
+                if (count($name_elements) > 0) {
+                    $firstName = array_shift($name_elements);
+                } else {
+                    $firstName = '.';
+                }
+                if (count($name_elements) > 0) {
+                    $lastName = implode(' ', $name_elements);
+                } else {
+                    $lastName = '.';
+                }
+ 
+                if ($address->getCountryCode() == 'JP') {
+                    $regionName = Mage::helper('flatz_amazon_payments')->getJpRegionNameToRegionName($address->getStateOrRegion());
+                    $regionModel = Mage::getModel('directory/region')->loadByCode($regionName, $address->getCountryCode());
+                    $regionId    = $regionModel->getId();
+                } else {
+                    $regionModel = Mage::getModel('directory/region')->loadByCode($address->getStateOrRegion(), $address->getCountryCode());
+                    $regionId    = $regionModel->getId();
+                }               
+                
                 $dataBilling = array(
                     'firstname'   => $firstName,
                     'lastname'    => $lastName,
-                    'street'      => array($billing->getAddressLine1(), $billing->getAddressLine2()),
-                    'city'        => $billing->getCity(),
-                    'region'      => $billing->getStateOrRegion(),
+                    'street'      => array($address->getAddressLine2(), $address->getAddressLine3()),
+                    'city'        => $address->getAddressLine1(),
                     'region_id'   => $regionId,
                     'postcode'    => $billing->getPostalCode(),
                     'country_id'  => $billing->getCountryCode(),

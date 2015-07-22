@@ -7,7 +7,7 @@
  * @package     Mage_Adminhtml
  * @author      Magento Core Team <core@magentocommerce.com>
  */
-class Amazon_Payments_Adminhtml_Amazon_PaymentsController extends Mage_Adminhtml_Controller_Action
+class FLATz_AmazonPayments_Adminhtml_Amazon_PaymentsController extends Mage_Adminhtml_Controller_Action
 {
 
     /**
@@ -15,7 +15,7 @@ class Amazon_Payments_Adminhtml_Amazon_PaymentsController extends Mage_Adminhtml
      */
     protected function _getApi()
     {
-        return Mage::getSingleton('amazon_payments/api');
+        return Mage::getSingleton('flatz_amazon_payments/api');
     }
 
     public function indexAction()
@@ -33,7 +33,7 @@ class Amazon_Payments_Adminhtml_Amazon_PaymentsController extends Mage_Adminhtml
         $order = Mage::getModel('sales/order')->load($orderId);
 
         if ($order->getId()) {
-            Mage::getSingleton('amazon_payments/async')->syncOrderStatus($order, true);
+            Mage::getSingleton('flatz_amazon_payments/async')->syncOrderStatus($order, true);
 
             Mage::app()->getResponse()->setRedirect(Mage::helper('adminhtml')->getUrl("adminhtml/sales_order/view", array('order_id' => $orderId)));
         }

@@ -2,7 +2,7 @@
 <layout>
     <default>
         <reference name="notifications">
-            <block type="amazon_payments/adminhtml_notifications" name="amazon_payments_notifications" template="amazon_payments/notifications.phtml"></block>
+            <block type="flatz_amazon_payments/adminhtml_notifications" name="flatz_amazon_payments_notifications" template="flatz_amazon_payments/notifications.phtml"></block>
         </reference>
     </default>
 </layout>
